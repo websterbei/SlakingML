@@ -1,5 +1,6 @@
 <template>
   <div class="training">
+    <h2>Training</h2>
     <TrainingColumn></TrainingColumn>
   </div>
 </template>

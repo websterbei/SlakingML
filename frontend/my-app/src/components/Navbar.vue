@@ -5,7 +5,7 @@
       app
     >
       <v-list dense>
-        <router-link to='/home' tag='v-list-item'>
+        <router-link to='/' tag='v-list-item'>
             <v-list-item link>
                 <v-list-item-action>
                     <v-icon>mdi-home</v-icon>
