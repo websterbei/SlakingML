@@ -19,7 +19,7 @@
         <router-link to='/training' tag='v-list-item'>
             <v-list-item link>
                 <v-list-item-action>
-                    <v-icon>mdi-home</v-icon>
+                    <v-icon>mdi-cloud-upload</v-icon>
                 </v-list-item-action>
                 <v-list-item-content>
                     <v-list-item-title>Training</v-list-item-title>
@@ -30,10 +30,10 @@
         <router-link to='/progress' tag='v-list-item'>
             <v-list-item link>
                 <v-list-item-action>
-                    <v-icon>mdi-home</v-icon>
+                    <v-icon>mdi-view-list</v-icon>
                 </v-list-item-action>
                 <v-list-item-content>
-                    <v-list-item-title>Progress</v-list-item-title>
+                    <v-list-item-title>Projects Progress</v-list-item-title>
                 </v-list-item-content>
             </v-list-item>
         </router-link>
@@ -41,7 +41,7 @@
         <router-link to='/deploy' tag='v-list-item'>
             <v-list-item link>
                 <v-list-item-action>
-                    <v-icon>mdi-home</v-icon>
+                    <v-icon>mdi-shovel</v-icon>
                 </v-list-item-action>
                 <v-list-item-content>
                     <v-list-item-title>Deploy</v-list-item-title>
@@ -52,7 +52,7 @@
         <router-link to='/about' tag='v-list-item'>
             <v-list-item link>
                 <v-list-item-action>
-                    <v-icon>mdi-home</v-icon>
+                    <v-icon>mdi-information</v-icon>
                 </v-list-item-action>
                 <v-list-item-content>
                     <v-list-item-title>About</v-list-item-title>

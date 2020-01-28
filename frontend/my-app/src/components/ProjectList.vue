@@ -1,9 +1,8 @@
 <template>
-    <v-col class="text-center">
+    <v-col>
       <v-list v-for="task in TaskList" :key='task.taskid'>
          <v-card
             class="mx-auto"
-            max-width="344"
             outlined
           >
           <v-list-item>
@@ -14,7 +13,7 @@
           </v-list-item>
       
           <v-card-actions>
-            <span>Progress: {{task.progressPercentile}}%</span>
+            <span>Status: {{task.status}}</span>
             <v-btn color='blue' text>View Details</v-btn>
             <v-btn color='green' text>Deploy</v-btn>
           </v-card-actions>
@@ -27,7 +26,7 @@
 export default {
   data() {
     return {
-      TaskList:[{name:'Webster\'s project',taskid:'001', progressPercentile:'99'}, {name:'Joey\'s project',taskid:'002',progressPercentile:'1'}]
+      TaskList:[{name:'Webster\'s project',taskid:'001', status:'ready'}, {name:'Joey\'s project',taskid:'002',status:'training'}]
     }
   },
   methods: {

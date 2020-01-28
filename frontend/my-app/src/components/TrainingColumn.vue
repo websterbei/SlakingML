@@ -1,5 +1,6 @@
 <template>
     <v-col class = 'text-center'>
+      <p>Job ID: {{JobID}},  Version Number: {{VersionNum}}</p>
       <v-text-field
       label="Project Name"
       placeholder="MyProject"
@@ -10,7 +11,6 @@
       placeholder="author"
       ></v-text-field>
 
-      <p>Job ID: {{JobID}},  Version Number: {{VersionNum}}</p>
 
       <v-file-input show-size label="Model input"></v-file-input>
 
