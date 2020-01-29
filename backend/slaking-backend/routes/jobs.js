@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var ObjectID = require('mongodb').ObjectID;
+var cors = require('cors');
 
 /* GET jobs listing. */
 router.get('/', function(req, res, next) {
@@ -43,7 +44,7 @@ router.get('/:jobId', function(req, res, next) {
 
 
 /* POST submit a new job */
-router.post('/', function(req, res, next) {
+router.post('/', cors(), function(req, res, next) {
   dataConfig = req.body.data_config;
   modelConfig = req.body.model_config;
   modelName = req.body.model_name;
