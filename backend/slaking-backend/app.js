@@ -9,7 +9,7 @@ var indexRouter = require('./routes/index');
 var jobsRouter = require('./routes/jobs');
 
 var app = express();
-app.options('/jobs', cors());
+app.options('*', cors());
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

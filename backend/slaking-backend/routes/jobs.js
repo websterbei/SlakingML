@@ -72,7 +72,7 @@ router.post('/', cors(), function(req, res, next) {
 
 
 /* DELETE remove a job */
-router.delete('/:jobId', function(req, res, next) {
+router.delete('/:jobId', cors(), function(req, res, next) {
   jobId = req.params.jobId;
   db = req.app.locals.dbClient.db("jobs");
   db.collection("jobs").deleteOne({"_id": ObjectID(jobId)}, function(err, dbres) {
