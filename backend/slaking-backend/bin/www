@@ -25,9 +25,20 @@ var server = http.createServer(app);
  * Listen on provided port, on all network interfaces.
  */
 
-server.listen(port);
-server.on('error', onError);
-server.on('listening', onListening);
+/**
+ * Creating mongodb client
+ */
+var MongoClient = require('mongodb').MongoClient;
+var url = "mongodb://mongodb:27017/training_jobs";
+
+MongoClient.connect(url, function(err, dbClient) {
+  if (err) throw err;
+  console.log("Database created!");
+  app.locals.dbClient = dbClient;
+  server.listen(port);
+  server.on('error', onError);
+  server.on('listening', onListening);
+});
 
 /**
  * Normalize a port into a number, string, or false.
