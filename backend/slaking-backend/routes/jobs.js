@@ -37,6 +37,7 @@ router.get('/:jobId', function(req, res, next) {
       res.status(500);
       res.send("Failed to retrieve the list of jobs!");
     } else {
+      dbres.job_id = dbres._id;
       res.send(dbres);
     }
   });
