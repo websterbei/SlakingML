@@ -1,0 +1,20 @@
+version: "3"
+
+networks:
+    backend_network:
+        driver: bridge
+        
+services:
+    mongodb:
+        image: moatez/mongodb:0.0.1 
+        networks:
+            - backend_network
+
+    slaking_backend:
+        image: websterbei/slaking-backendnode:v1
+        networks:
+             - backend_network
+        depends_on:
+             - mongodb
+        ports:
+            - "8080:3000"
