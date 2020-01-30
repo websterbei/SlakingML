@@ -22,7 +22,7 @@
                     <v-icon>mdi-cloud-upload</v-icon>
                 </v-list-item-action>
                 <v-list-item-content>
-                    <v-list-item-title>Training</v-list-item-title>
+                    <v-list-item-title>New Training</v-list-item-title>
                 </v-list-item-content>
             </v-list-item>
         </router-link>
@@ -33,7 +33,7 @@
                     <v-icon>mdi-view-list</v-icon>
                 </v-list-item-action>
                 <v-list-item-content>
-                    <v-list-item-title>Projects Progress</v-list-item-title>
+                    <v-list-item-title>Projects List</v-list-item-title>
                 </v-list-item-content>
             </v-list-item>
         </router-link>
@@ -44,7 +44,7 @@
                     <v-icon>mdi-shovel</v-icon>
                 </v-list-item-action>
                 <v-list-item-content>
-                    <v-list-item-title>Deploy</v-list-item-title>
+                    <v-list-item-title>Deploy Model</v-list-item-title>
                 </v-list-item-content>
             </v-list-item>
         </router-link>

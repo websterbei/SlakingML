@@ -4,7 +4,7 @@ var ObjectID = require('mongodb').ObjectID;
 var cors = require('cors');
 
 /* GET jobs listing. */
-router.get('/', function(req, res, next) {
+router.get('/', cors(), function(req, res, next) {
   db = req.app.locals.dbClient.db("jobs");
   if(req.query.details!="true") {
     db.collection("jobs").distinct("_id", {}, function(err, dbres) {
@@ -29,7 +29,7 @@ router.get('/', function(req, res, next) {
 
 
 /* GET details about a specific job */
-router.get('/:jobId', function(req, res, next) {
+router.get('/:jobId', cors(), function(req, res, next) {
   jobId = req.params.jobId;
   db = req.app.locals.dbClient.db("jobs");
   db.collection("jobs").findOne({"_id": ObjectID(jobId)}, function(err, dbres) {
