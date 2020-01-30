@@ -1,20 +1,38 @@
 <template>
-    <v-col class = 'text-center'>
-      <p>Job ID: {{JobID}},  Version Number: {{VersionNum}}</p>
+    <v-col>
+      <!-- <p>FOR DEBUG: return statement: {{job_added_status}}  model:{{job.model_config}} {{job.name}}</p> -->
+      <p>Job ID: {{job.job_id}}</p>
+      <!-- <p> Number: {{VersionNum}}</p> -->
       <v-text-field
       label="Project Name"
       placeholder="MyProject"
+      v-model="job.name"
+      required
       ></v-text-field>
     
-      <!-- <v-text-field
+      <v-text-field
       label="Author(s)"
       placeholder="author"
-      ></v-text-field> -->
+      v-model="job.author"
+      required
+      ></v-text-field>
 
+      <v-text-field
+      label="Model File Path"
+      placeholder=""
+      v-model="job.model_config"
+      required
+      ></v-text-field>
 
-      <v-file-input show-size label="Model input"></v-file-input>
+      <v-text-field
+      label="Data File Path"
+      placeholder=""
+      v-model="job.data_config"
+      required
+      ></v-text-field>
 
-      <v-file-input show-size label="Data input"></v-file-input>
+      <!-- <v-file-input show-size label="Model Config" v-model="model_file"></v-file-input> -->
+      <!-- <v-file-input show-size label="Data Config"></v-file-input> -->
       <v-btn v-on:click.prevent="post">Add Project</v-btn>
       <v-btn> Start Training </v-btn>
     </v-col>
@@ -27,26 +45,24 @@ export default {
       job:{
         job_id:"",
         name:"",
+        author:"",
         status:"",
-        data_location:"",
-        model_location:"",
-        training_result_location:""
+        data_config:"",
+        model_config:"",
+        training_result_config:""
       },
-      job_added_status :""
+      job_added_status :"",
     }
   },
   methods: {
     post: function(){
-            this.$http.post('http://8083/jobs', {
-                job_id: this.job.job_id,
-                name: this.job.name,
-                status: this.job.status,
-                data_location: this.job.data_location,
-                model_location: this.job.model_location,
-                training_result_location: this.job.training_result_location
-            }).then(function(status){
-                this.job_added_status = status;
-            });
+            this.$http.post('http://localhost:8082/jobs', {
+                model_name: this.job.name,
+                author_name: this.job.author,
+                model_config: this.job.model_config,
+                data_config: this.job.data_config
+            })
+            .then(response => this.job.job_id = response.data.job_id);
         }
 },
   computed: {
