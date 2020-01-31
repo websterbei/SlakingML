@@ -6,14 +6,14 @@
       <v-text-field
       label="Project Name"
       placeholder="MyProject"
-      v-model="job.name"
+      v-model="job.model_name"
       required
       ></v-text-field>
     
       <v-text-field
       label="Author(s)"
       placeholder="author"
-      v-model="job.author"
+      v-model="job.author_name"
       required
       ></v-text-field>
 
@@ -44,12 +44,12 @@ export default {
     return {
       job:{
         job_id:"",
-        name:"",
-        author:"",
-        status:"",
+        model_name:"",
+        author_name:"",
+        // status:"",
         data_config:"",
         model_config:"",
-        training_result_config:""
+        // training_result_config:""
       },
       job_added_status :"",
     }
@@ -57,8 +57,8 @@ export default {
   methods: {
     post: function(){
             this.$http.post('http://localhost:8082/jobs', {
-                model_name: this.job.name,
-                author_name: this.job.author,
+                model_name: this.job.model_name,
+                author_name: this.job.author_name,
                 model_config: this.job.model_config,
                 data_config: this.job.data_config
             })

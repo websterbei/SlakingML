@@ -17,4 +17,4 @@ services:
         depends_on:
              - mongodb
         ports:
-            - "8080:3000"
+            - "8082:3000"

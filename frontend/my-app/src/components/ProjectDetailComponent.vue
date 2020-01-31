@@ -9,7 +9,7 @@
                     dark
                     v-on="on"
                     >
-                    Select a model to deploy
+                    Select a job
                     </v-btn>
                 </template>
                 <v-list>
@@ -29,12 +29,8 @@
         <p>Author name: {{job.author_name}}</p>
         <p>Model Configuration: {{job.model_config}}</p>
         <p>Data Configuration: {{job.data_config}}</p>
-        <v-row>
-        <v-btn>TODO: Deploy</v-btn>
-        </v-row>
-        <v-row>
+
         <v-btn v-on:click.prevent="refresh">Refresh</v-btn>
-        </v-row>
 
     </v-col>
 </template>
