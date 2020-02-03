@@ -9,6 +9,8 @@ services:
         image: moatez/mongodb:0.0.1 
         networks:
             - backend_network
+        ports:
+            - "27017:27017"
 
     slaking_backend:
         image: websterbei/slaking-backendnode:v1
