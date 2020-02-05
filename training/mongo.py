@@ -21,16 +21,16 @@ def print_job_info(training_job):
     print("Model Config: ")
     print(model_config)
 
-# TODO: Error handling
-def get_job_object_by_job_id(job_id):
-    print("Looking up job: {}".format(job_id))
-    training_job = db.jobs.find_one({"_id": ObjectId(job_id)})
-    client.close()
-    print_job_info(training_job)
-    return training_job
+# # TODO: Error handling
+# def get_job_object_by_job_id(job_id):
+#     print("Looking up job: {}".format(job_id))
+#     training_job = db.jobs.find_one({"_id": ObjectId(job_id)})
+#     client.close()
+#     print_job_info(training_job)
+#     return training_job
 
 # Local test
-def get_configs_by_job_id(job_id):
+def get_job_object_by_job_id(job_id):
     with open("model_config") as f:
         model_config = "".join(f.readlines())
     with open("data_config") as f:
