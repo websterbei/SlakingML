@@ -17,19 +17,24 @@
       required
       ></v-text-field>
 
-      <v-text-field
+      <!-- <v-text-field
       label="Model File Path"
       placeholder=""
       v-model="job.model_config"
       required
-      ></v-text-field>
+      ></v-text-field> -->
+      <h4>Enter your training model class in the below box:</h4>
+      <prism-editor label="Training Model" v-model="job.model_config" language="js" :line-numbers=true />
 
-      <v-text-field
+      <!-- <v-text-field
       label="Data File Path"
       placeholder=""
       v-model="job.data_config"
       required
-      ></v-text-field>
+      ></v-text-field> -->
+
+      <h4>Enter your data configuration metadata in the below box:</h4>
+      <prism-editor label="Data Config" v-model="job.data_config" language="js" :line-numbers=true />
 
       <!-- <v-file-input show-size label="Model Config" v-model="model_file"></v-file-input> -->
       <!-- <v-file-input show-size label="Data Config"></v-file-input> -->
@@ -39,17 +44,32 @@
 </template>
 
 <script>
+import PrismEditor from "vue-prism-editor";
 export default {
   data() {
     return {
+      
       job:{
         job_id:"",
         model_name:"",
         author_name:"",
         // status:"",
-        data_config:"",
-        model_config:"",
-        // training_result_config:""
+        data_config:"{\ncolumn_names: [label, feature1,feature2],\ncolumn _type: [image,integer,flaot],\nauthor_name: “”,\ndataset_name: “”,\nresource_files:[]\n}",
+        model_config:"class Model():\n"+
+                      "    optimizer = \"adam\"  // CHANGE THIS\n"+
+                      "    learning_rate = 0.0001 //CHANGE THIS\n"+
+                      "    \n"+
+                      "    # initialize method is called once before forward and loss methods are called\n"+
+                      "    def initialize(self):\n"+
+                      "        // YOUR CODE HERE\n"+
+                      "\n"+
+                      "    # y_: label\n"+
+                      "    # y: model output from forward method\n"+
+                      "    def loss(self, y_, y):\n"+
+                      "        // YOUR CODE HERE\n"+
+                      "\n"+
+                      "    def forward(self, x):\n"+
+                      "        // YOUR CODE HERE",
       },
       job_added_status :"",
     }
@@ -67,6 +87,9 @@ export default {
 },
   computed: {
 },
+components:{
+  PrismEditor
+}
 }
 </script>
 
