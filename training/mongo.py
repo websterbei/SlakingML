@@ -34,7 +34,7 @@ def get_job_object_by_job_id(job_id):
     with open("model_config") as f:
         model_config = "".join(f.readlines())
     with open("data_config") as f:
-        data_config = json.load(f)
+        data_config = "".join(f.readlines())
     training_job = {}
     training_job["model_config"] = model_config
     training_job["data_config"] = data_config
