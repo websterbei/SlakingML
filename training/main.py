@@ -2,7 +2,7 @@ import torch
 import numpy as np
 import json
 
-from helper import get_model_class_from_config, get_optimizer_from_model_class
+from utils import get_model_class_from_config, get_optimizer_from_model_class
 from mongo import get_job_object_by_job_id
 from module_factory import get_nn_module_from_model_class
 
@@ -29,14 +29,17 @@ class Trainer():
         self.forward_net = module()
         self.optimizer = get_optimizer_from_model_class(model_class, self.forward_net)
 
-    def _print_metrics(self, epoch_ind, batch_ind, loss):
-        print("epoch: {}    batch: {}   ".format(epoch_ind, batch_ind), end='')
-        print("loss: {} ".format(loss), end='')
+    def _print_metrics(self, epoch_ind=None, batch_ind=None, loss=None):
+        if epoch_ind is not None and batch_ind is not None:
+            print("epoch: {}    batch: {}   ".format(epoch_ind, batch_ind), end='')
+        if loss is not None:
+            print("loss: {} ".format(loss), end='')
         for metric in self.forward_net.metrics:
             print("{}: {}   ".format(metric.metric_name, metric.get_report()), end='')
         print()
 
     def train(self):
+        print("Start training:")
         for epoch_ind in range(1, self.number_of_epochs+1):
             for metric in self.forward_net.metrics:
                 metric.reset()
@@ -49,6 +52,19 @@ class Trainer():
                 self.optimizer.step()
                 if batch_ind%50 == 0:
                     self._print_metrics(epoch_ind, batch_ind, loss)
+    
+    def test(self):
+        print("Start testing:")
+        for metric in self.forward_net.metrics:
+            metric.reset()
+        self.forward_net.eval()
+        for batch_ind, (batch_x, batch_y) in enumerate(self.test_loader):
+            y = self.forward_net(batch_x)
+            loss = self.forward_net.loss(y, batch_y)
+            self.forward_net.add_to_metric(y, batch_y)
+        self._print_metrics()
+
 
 trainer = Trainer("somejobid")
 trainer.train()
+trainer.test()
