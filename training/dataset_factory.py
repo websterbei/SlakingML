@@ -14,12 +14,12 @@ class CustomInterableDataset(IterableDataset):
             with open(os.path.join(dataset_folder, "metadata")) as f:
                 metadata = json.load(f)
         except:
-            print("Did not find metadata file in given folder")
+            raise Exception("Did not find metadata file in given folder")
         # basic error checking
         if (metadata.get("column_names", None) is None) or (len(metadata.get("column_names")) == 0) \
             or (metadata.get("column_types", None) is None) or (len(metadata.get("column_types")) == 0) \
             or (len(metadata.get("column_names")) != len(metadata.get("column_types"))):
-            print("metadata incorrect")
+            raise Exception("metadata incorrect")
         
         self.resource_files = [os.path.join(dataset_folder, resource_file) for resource_file in metadata["resource_files"]]
 
@@ -53,7 +53,7 @@ class CustomInterableDataset(IterableDataset):
         elif dtype == "image":
             pass
         else:
-            print("Unsupported datatype: " + dtype)
+            raise Exception("Unsupported datatype: " + dtype)
 
     def __iter__(self):
         for resource_file in self.resource_files:

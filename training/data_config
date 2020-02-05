@@ -1,3 +1,6 @@
 {
-    "dataset_name": "my_dataset"
+    "train_dataset_path": "test_dataset_fashion_mnist",
+    "test_dataset_path": "test_dataset_fashion_mnist",
+    "epochs": 5,
+    "batch_size": 10
 }

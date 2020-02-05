@@ -9,7 +9,8 @@ def get_nn_module_from_model_class(model_class):
         "__init__": nn_module_init,
         "initialize": model_class.initialize,
         "forward": model_class.forward,
-        "loss": model_class.loss
+        "loss": model_class.loss,
+        "add_to_metric": model_class.add_to_metric
         })
 
     return nn_module
