@@ -11,4 +11,5 @@ def get_nn_module_from_model_class(model_class):
         "forward": model_class.forward,
         "loss": model_class.loss
         })
+
     return nn_module

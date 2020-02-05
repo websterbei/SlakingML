@@ -5,8 +5,8 @@ import torch.nn.functional as F
 class Model():
     optimizer = "adam"
     learning_rate = 0.0001
-    epochs = 10
-    
+    epochs = 10    
+
     # initialize method is called once before forward and loss methods are called
     def initialize(self):
         self.linear1 = nn.Linear(784, 100)
