@@ -1,6 +1,6 @@
 {
     "train_dataset_path": "test_dataset_fashion_mnist",
     "test_dataset_path": "test_dataset_fashion_mnist",
-    "epochs": 0,
+    "epochs": 2,
     "batch_size": 20
 }

@@ -12,6 +12,5 @@ def get_nn_module_from_model_class(model_class):
         "loss": model_class.loss,
         "add_to_metric": model_class.add_to_metric
         })
-    print(ModelModule.__module__)
-    print(ModelModule.__name__)
+    ModelModule.__module__ = '__main__'
     return ModelModule

@@ -56,7 +56,7 @@ class Trainer():
         print("Saving models......")
         if not os.path.isdir(self.model_save_dir):
             os.mkdir(self.model_save_dir)
-        torch.save(self.forward_net, self.full_path)
+        torch.save(self.forward_net.state_dict(), self.full_path)
         print("Model saved at {}".format(self.full_path))
         
     def train(self):
