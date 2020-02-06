@@ -10,5 +10,5 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-ins
 RUN ln $(which pip3) /usr/bin/pip
 RUN ln $(which python3) /usr/bin/python
 
-RUN pip install torch
+RUN pip install torch pymongo
 

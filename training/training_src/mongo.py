@@ -39,5 +39,5 @@ def get_job_object_by_job_id(job_id):
     training_job["model_config"] = model_config
     training_job["data_config"] = data_config
     training_job["author_name"] = "webster"
-    training_job["model_name"] = "my model"
+    training_job["model_name"] = "mymodel"
     return training_job
