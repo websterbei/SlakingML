@@ -1,0 +1,13 @@
+version: "3"
+
+networks:
+    backend_network:
+        driver: bridge
+        
+services:
+    slaking_frontend:
+        image: websterbei/slaking-frontendnode:v1
+        networks:
+             - backend_network
+        ports:
+            - "8081:8080"

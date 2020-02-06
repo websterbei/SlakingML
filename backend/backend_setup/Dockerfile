@@ -1,10 +1,10 @@
-FROM websterbei/nodejs-base:v1
+FROM node
 
 RUN mkdir /slaking-backend
 
 RUN echo $(which node)
 
-ADD ./backend/slaking-backend/ /slaking-backend
+ADD ./slaking-backend/ /slaking-backend
 
 EXPOSE 3000
 

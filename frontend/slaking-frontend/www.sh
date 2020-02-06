@@ -1,0 +1,1 @@
+cd /slaking-frontend && npm run-script serve
