@@ -1,5 +1,10 @@
 version: "3"
 
+networks:
+    slaking_network:
+        external:
+            name: slaking_network
+
 services:
   namenode:
     image: websterbei/hadoop-namenode:v1
@@ -8,6 +13,8 @@ services:
       - 9870:9870
     volumes:
       - hadoop_namenode:/hadoop/dfs/name
+    networks:
+      - slaking_network
     environment:
       - CLUSTER_NAME=test
     env_file:
@@ -20,6 +27,8 @@ services:
       - hadoop_datanode:/hadoop/dfs/data
     environment:
       SERVICE_PRECONDITION: "namenode:9870"
+    networks:
+      - slaking_network
     env_file:
       - ./hadoop.env
   

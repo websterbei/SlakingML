@@ -12,11 +12,11 @@ from dataset_factory import CustomInterableDataset
 from torch.utils.data import DataLoader
 
 
-# MODEL_SAVE_FOLDER = '/HDFS/MODELS'
-# DATASET_ROOT_DIR = '/HDFS/DATASETS'
+MODEL_SAVE_FOLDER = '/HDFS/MODELS'
+DATASET_ROOT_DIR = '/HDFS/DATASETS'
 
-MODEL_SAVE_FOLDER = './'
-DATASET_ROOT_DIR = './'
+# MODEL_SAVE_FOLDER = './'
+# DATASET_ROOT_DIR = './'
 
 
 # TODO: needs to add tons of error checking
@@ -87,6 +87,7 @@ class Trainer():
             self.forward_net.add_to_metric(y, batch_y)
         self._print_metrics()
 
-trainer = Trainer("somejobid")
+job_id = os.environ.get("SLAKING_JOB_ID")
+trainer = Trainer(job_id)
 trainer.train()
 trainer.test()

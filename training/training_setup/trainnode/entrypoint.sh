@@ -2,8 +2,7 @@
 
 mkdir /HDFS
 mount -t nfs -o vers=3,proto=tcp,nolock,noacl,sync namenode:/  /HDFS
+mkdir /HDFS/MODELS
+mkdir /HDFS/DATASETS
 
-# Retrieve pytorch model file
-# Start training + Serialization
-# Save model to HDFS
-# Exit
+cd training && python main.py

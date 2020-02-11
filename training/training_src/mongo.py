@@ -22,22 +22,22 @@ def print_job_info(training_job):
     print(model_config)
 
 # # TODO: Error handling
-# def get_job_object_by_job_id(job_id):
-#     print("Looking up job: {}".format(job_id))
-#     training_job = db.jobs.find_one({"_id": ObjectId(job_id)})
-#     client.close()
-#     print_job_info(training_job)
-#     return training_job
+def get_job_object_by_job_id(job_id):
+    print("Looking up job: {}".format(job_id))
+    training_job = db.jobs.find_one({"_id": ObjectId(job_id)})
+    client.close()
+    print_job_info(training_job)
+    return training_job
 
 # Local test
-def get_job_object_by_job_id(job_id):
-    with open("model_config") as f:
-        model_config = "".join(f.readlines())
-    with open("data_config") as f:
-        data_config = "".join(f.readlines())
-    training_job = {}
-    training_job["model_config"] = model_config
-    training_job["data_config"] = data_config
-    training_job["author_name"] = "webster"
-    training_job["model_name"] = "mymodel"
-    return training_job
+# def get_job_object_by_job_id(job_id):
+#     with open("model_config") as f:
+#         model_config = "".join(f.readlines())
+#     with open("data_config") as f:
+#         data_config = "".join(f.readlines())
+#     training_job = {}
+#     training_job["model_config"] = model_config
+#     training_job["data_config"] = data_config
+#     training_job["author_name"] = "webster"
+#     training_job["model_name"] = "mymodel"
+#     return training_job

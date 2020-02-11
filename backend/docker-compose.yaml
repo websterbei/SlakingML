@@ -1,21 +1,24 @@
 version: "3"
 
 networks:
-    backend_network:
-        driver: bridge
+    slaking_network:
+        external:
+            name: slaking_network
         
 services:
     mongodb:
         image: moatez/mongodb:0.0.1 
+        container_name: mongodb
         networks:
-            - backend_network
+            - slaking_network
         ports:
             - "27017:27017"
 
     slaking_backend:
         image: websterbei/slaking-backendnode:v1
+        container_name: slaking_backend
         networks:
-             - backend_network
+             - slaking_network
         depends_on:
              - mongodb
         ports:
