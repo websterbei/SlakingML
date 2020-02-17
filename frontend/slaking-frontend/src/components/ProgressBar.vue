@@ -1,75 +1,59 @@
 <template>
     <v-col class="text-center">
-        <h3>Training & Deployment Progress</h3>
-        <v-row>
-          <v-progress-circular
-            :rotate="360"
-            :size="100"
-            :width="15"
-            :value="value"
-            color="teal"
-          >
-            {{ value }}
-          </v-progress-circular>
-
-          <v-progress-circular
-            :rotate="-90"
-            :size="100"
-            :width="15"
-            :value="value"
-            color="primary"
-          >
-            {{ value }}
-          </v-progress-circular>
-
-          <v-progress-circular
-            :rotate="90"
-            :size="100"
-            :width="15"
-            :value="value"
-            color="red"
-          >
-            {{ value }}
-          </v-progress-circular>
-
-          <v-progress-circular
-            :rotate="180"
-            :size="100"
-            :width="15"
-            :value="value"
-            color="pink"
-          >
-            {{ value }}
-          </v-progress-circular>
-        </v-row>
+        <h3>Training Progress</h3>
+        <v-list v-for="metric in metrics" :key='metric'>
+          <v-sparkline
+            :value="values[metric]"
+            :gradient="gradient"
+            :smooth="radius || false"
+            :padding="padding"
+            :line-width="width"
+            :stroke-linecap="lineCap"
+            :gradient-direction="gradientDirection"
+            :fill="fill"
+            :type="type"
+            :auto-line-width="autoLineWidth"
+            auto-draw
+          ></v-sparkline>
+        </v-list>
     </v-col>
 </template>
 
 <script>
-export default {
-    data () {
-      return {
-        interval: {},
-        value: 0,
-      }
-    },
-    beforeDestroy () {
-      clearInterval(this.interval)
-    },
-    mounted () {
-      this.interval = setInterval(() => {
-        if (this.value === 100) {
-          return (this.value = 0)
+  const gradients = [
+    ['#222'],
+    ['#42b3f4'],
+    ['red', 'orange', 'yellow'],
+    ['purple', 'violet'],
+    ['#00c6ff', '#F0F', '#FF0'],
+    ['#f72047', '#ffd200', '#1feaea'],
+  ]
+
+  export default {
+    data: () => ({
+      metrics: [],
+      width: 0.5,
+      radius: 10,
+      padding: 8,
+      lineCap: 'round',
+      gradient: gradients[5],
+      values: [],
+      gradientDirection: 'top',
+      gradients,
+      fill: false,
+      type: 'trend',
+      autoLineWidth: false
+    }),
+  created() {
+    var job_id=this.$route.params.id;
+    this.$http
+      .get('http://localhost:8082/jobs/' + job_id)
+      .then((response)=>{
+        this.values = response.data.metrics;
+        for (var key in response.data.metrics) {
+          this.metrics.push(key);
         }
-        this.value += 10
-      }, 1000)
-    },
+      });
+    }
   }
 </script>
-
-
-<style>
-  .v-progress-circular {
-    margin: 1rem;
-  }
-</style>
