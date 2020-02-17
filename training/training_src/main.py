@@ -3,27 +3,22 @@ import numpy as np
 import json
 import uuid
 import os
+import sys
 
 from utils import get_model_class_from_config, get_optimizer_from_model_class
-from mongo import get_job_object_by_job_id
+from mongo import get_job_object_by_job_id, update_job_status, update_job_progress
 from module_factory import get_nn_module_from_model_class
 
 from dataset_factory import CustomInterableDataset
 from torch.utils.data import DataLoader
 
 
-MODEL_SAVE_FOLDER = '/HDFS/MODELS'
-DATASET_ROOT_DIR = '/HDFS/DATASETS'
-
-# MODEL_SAVE_FOLDER = './'
-# DATASET_ROOT_DIR = './'
-
-
 # TODO: needs to add tons of error checking
 class Trainer():
     
-    def __init__(self, job_id):
-        training_job = get_job_object_by_job_id(job_id)
+    def __init__(self, job_id, test=False, local_model=False):
+        self.job_id = job_id
+        training_job = get_job_object_by_job_id(job_id, test=local_model)
         model_class = get_model_class_from_config(training_job.get("model_config"))
         module = get_nn_module_from_model_class(model_class)
         data_config = json.loads(training_job["data_config"])
@@ -58,7 +53,16 @@ class Trainer():
             os.mkdir(self.model_save_dir)
         torch.save(self.forward_net.state_dict(), self.full_path)
         print("Model saved at {}".format(self.full_path))
-        
+        update_job_status(self.job_id, "successful", self.full_path)
+        print("Job status synchronized")
+
+    def _update_job_progress(self, loss=None):
+        metric_reports = {}
+        metric_reports["loss"] = loss.detach().item()
+        for metric in self.forward_net.metrics:
+            metric_reports[metric.metric_name] = metric.get_report()
+        update_job_progress(self.job_id, metric_reports)
+
     def train(self):
         print("Start training:")
         for epoch_ind in range(1, self.number_of_epochs+1):
@@ -73,6 +77,7 @@ class Trainer():
                 self.optimizer.step()
                 if batch_ind%50 == 0:
                     self._print_metrics(epoch_ind, batch_ind, loss)
+                self._update_job_progress(loss)
         print("Finished training")
         self._save_model()
     
@@ -87,7 +92,19 @@ class Trainer():
             self.forward_net.add_to_metric(y, batch_y)
         self._print_metrics()
 
-job_id = os.environ.get("SLAKING_JOB_ID")
-trainer = Trainer(job_id)
+if "-test" in sys.argv:
+    MODEL_SAVE_FOLDER = './'
+    DATASET_ROOT_DIR = './'
+    job_id = sys.argv[-1]
+    if "-local_model" in sys.argv:
+        trainer = Trainer(job_id, test=True, local_model=True)
+    else:
+        trainer = Trainer(job_id, test=True)
+else:
+    MODEL_SAVE_FOLDER = '/HDFS/MODELS'
+    DATASET_ROOT_DIR = '/HDFS/DATASETS'
+    job_id = os.environ.get("SLAKING_JOB_ID")
+    trainer = Trainer(job_id)
+
 trainer.train()
 trainer.test()
