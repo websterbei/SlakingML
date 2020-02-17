@@ -1,13 +1,13 @@
 FROM node
 
+RUN npm install -g http-server
+
 RUN mkdir /slaking-frontend
 
-ADD ./slaking-frontend/ /slaking-frontend
+ADD ./slaking-frontend/dist /slaking-frontend
 
-RUN ls /slaking-frontend
+WORKDIR /slaking-frontend
 
-EXPOSE 3000
+EXPOSE 8080
 
-RUN chmod a+x /slaking-frontend/www.sh
-
-CMD ["/slaking-frontend/www.sh"]
+CMD ["http-server", "./"]
