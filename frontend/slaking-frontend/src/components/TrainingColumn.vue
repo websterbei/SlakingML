@@ -45,6 +45,7 @@
 
 <script>
 import PrismEditor from "vue-prism-editor";
+import {backendAddress} from '@/configurations.js'
 export default {
   data() {
     return {
@@ -76,7 +77,7 @@ export default {
   },
   methods: {
     post: function(){
-            this.$http.post('http://localhost:8082/jobs', {
+            this.$http.post(backendAddress + 'jobs', {
                 model_name: this.job.model_name,
                 author_name: this.job.author_name,
                 model_config: this.job.model_config,

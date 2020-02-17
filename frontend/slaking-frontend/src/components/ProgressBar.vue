@@ -29,6 +29,8 @@
     ['#f72047', '#ffd200', '#1feaea'],
   ]
 
+  import {backendAddress} from '@/configurations.js'
+
   export default {
     data: () => ({
       metrics: [],
@@ -47,7 +49,7 @@
   created() {
     var job_id=this.$route.params.id;
     this.$http
-      .get('http://localhost:8082/jobs/' + job_id)
+      .get(backendAddress + 'jobs/' + job_id)
       .then((response)=>{
         this.values = response.data.metrics;
         for (var key in response.data.metrics) {

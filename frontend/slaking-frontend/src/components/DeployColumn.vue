@@ -40,6 +40,7 @@
 </template>
 
 <script>
+import {backendAddress} from '@/configurations.js'
 export default {
   data() {
     return {
@@ -57,10 +58,10 @@ export default {
   methods: {
     refresh: function(){
       this.$http
-        .get('http://localhost:8082/jobs')
+        .get(backendAddress + 'jobs')
         .then((response)=>this.job_id_list = response.data.jobs)
       this.$http
-                .get('http://localhost:8082/jobs/'+this.job.job_id)
+                .get(backendAddress + 'jobs/'+this.job.job_id)
                 .then((response)=>{
                   this.job_list.push(
                     {
@@ -76,7 +77,7 @@ export default {
     selectproject: function(id){
       this.job.job_id = id;
       this.$http
-                .get('http://localhost:8082/jobs/'+id)
+                .get(backendAddress + 'jobs/'+id)
                 .then((response)=>{
                     this.job.job_id=response.data.job_id;
                     this.job.data_config=response.data.data_config;
@@ -92,10 +93,10 @@ export default {
   created(){
       this.job.job_id=this.$route.params.id;
       this.$http
-        .get('http://localhost:8082/jobs')
+        .get(backendAddress + 'jobs')
         .then((response)=>this.job_id_list = response.data.jobs)
       this.$http
-                .get('http://localhost:8082/jobs/'+this.job.job_id)
+                .get(backendAddress + 'jobs/'+this.job.job_id)
                 .then((response)=>{
                     this.job.job_id=response.data.job_id;
                     this.job.data_config=response.data.data_config;

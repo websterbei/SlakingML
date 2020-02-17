@@ -1,0 +1,1 @@
+export const backendAddress = "http://backend.tan90.tech:8080/"

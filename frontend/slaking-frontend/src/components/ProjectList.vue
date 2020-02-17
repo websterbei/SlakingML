@@ -30,6 +30,7 @@
 </template>
 
 <script>
+import {backendAddress} from '@/configurations.js'
 export default {
   data() {
     return {
@@ -44,12 +45,12 @@ export default {
       this.job_list = [];
       var id;
       this.$http
-        .get('http://localhost:8082/jobs')
+        .get(backendAddress + 'jobs')
         .then((response)=>{
           this.job_id_list = response.data.jobs
           for(id of this.job_id_list){
               this.$http
-                .get('http://localhost:8082/jobs/'+id)
+                .get(backendAddress + 'jobs/'+id)
                 .then((response)=>{
                   this.job_list.push(
                     {
@@ -67,7 +68,7 @@ export default {
     },
     deleteJob: function(id){
       this.$http
-      .delete('http://localhost:8082/jobs/'+id)
+      .delete(backendAddress + 'jobs/'+id)
       .then((response)=>{
         if(!response.data.status==="successful"){
           this.returnstatement = response
@@ -76,12 +77,12 @@ export default {
       this.job_id_list = [];
       this.job_list = [];
       this.$http
-        .get('http://localhost:8082/jobs')
+        .get(backendAddress + 'jobs')
         .then((response)=>{
           this.job_id_list = response.data.jobs
           for(id of this.job_id_list){
               this.$http
-                .get('http://localhost:8082/jobs/'+id)
+                .get(backendAddress + 'jobs/'+id)
                 .then((response)=>{
                   this.job_list.push(
                     {
@@ -103,12 +104,12 @@ export default {
   created(){
       var id;
       this.$http
-        .get('http://localhost:8082/jobs')
+        .get(backendAddress + 'jobs')
         .then((response)=>{
           this.job_id_list = response.data.jobs
           for(id of this.job_id_list){
               this.$http
-                .get('http://localhost:8082/jobs/'+id)
+                .get(backendAddress + 'jobs/'+id)
                 .then((response)=>{
                   this.job_list.push(
                     {
