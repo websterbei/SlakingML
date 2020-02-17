@@ -37,6 +37,7 @@ class Trainer():
         self.model_save_name = training_job["model_name"] + '-' + str(uuid.uuid1())
         self.model_save_dir = os.path.join(MODEL_SAVE_FOLDER, training_job["model_name"])
         self.full_path = os.path.join(self.model_save_dir, self.model_save_name)
+        update_job_status(self.job_id, "in progress", close_connection=False)
 
     def _print_metrics(self, epoch_ind=None, batch_ind=None, loss=None):
         if epoch_ind is not None and batch_ind is not None:

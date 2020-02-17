@@ -40,12 +40,13 @@ def get_job_object_by_job_id(job_id, test=False):
         print_job_info(training_job)
         return training_job
 
-def update_job_status(job_id, status, model_save_location = None):
+def update_job_status(job_id, status, model_save_location = None, close_connection=True):
     update_delta = {}
     update_delta["status"] = status
     update_delta["model_save_location"] = model_save_location
     db.jobs.update_one({"_id": ObjectId(job_id)}, {"$set": update_delta})
-    client.close()
+    if close_connection:
+        client.close()
 
 def update_job_progress(job_id, metrics):
     for metric, value in metrics.items():

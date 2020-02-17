@@ -11,8 +11,8 @@ services:
     container_name: namenode
     ports:
       - 9870:9870
-    volumes:
-      - hadoop_namenode:/hadoop/dfs/name
+    # volumes:
+      # - hadoop_namenode:/hadoop/dfs/name
     networks:
       - slaking_network
     environment:
@@ -23,8 +23,8 @@ services:
   datanode:
     image: websterbei/hadoop-datanode:v1
     container_name: datanode
-    volumes:
-      - hadoop_datanode:/hadoop/dfs/data
+    # volumes:
+      # - hadoop_datanode:/hadoop/dfs/data
     environment:
       SERVICE_PRECONDITION: "namenode:9870"
     networks:
@@ -58,7 +58,7 @@ services:
   #   env_file:
   #     - ./hadoop.env
   
-volumes:
-  hadoop_namenode:
-  hadoop_datanode:
+# volumes:
+  # hadoop_namenode:
+  # hadoop_datanode:
   # hadoop_historyserver:
