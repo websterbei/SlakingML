@@ -32,6 +32,16 @@ spec:
             configMapKeyRef:
               key: CORE_CONF_hadoop_http_staticuser_user
               name: datanode-hadoop-env
+        - name: CORE_CONF_hadoop_proxyuser_hdfs_groups
+          valueFrom:
+            configMapKeyRef:
+              key: CORE_CONF_hadoop_proxyuser_hdfs_groups
+              name: datanode-hadoop-env
+        - name: CORE_CONF_hadoop_proxyuser_hdfs_hosts
+          valueFrom:
+            configMapKeyRef:
+              key: CORE_CONF_hadoop_proxyuser_hdfs_hosts
+              name: datanode-hadoop-env
         - name: CORE_CONF_hadoop_proxyuser_hue_groups
           valueFrom:
             configMapKeyRef:

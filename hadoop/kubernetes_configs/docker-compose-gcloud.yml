@@ -12,6 +12,8 @@ services:
       - 111:111/udp
       - 9000:9000
       - 8020:8020
+      - 4242:4242/tcp
+      - 4242:4242/udp
     # volumes:
       # - hadoop_namenode:/hadoop/dfs/name
     environment:

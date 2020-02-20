@@ -1,8 +1,8 @@
 FROM websterbei/pytorch-base:v1
 
-ADD ./training_setup/trainnode/entrypoint.sh /entrypoint.sh
+ADD ./training_setup/trainnode/run.sh /run.sh
 ADD ./training_src /training
 
-RUN chmod a+x /entrypoint.sh
+RUN chmod a+x /run.sh
 
-ENTRYPOINT ["/entrypoint.sh"]
+CMD ["/run.sh"]

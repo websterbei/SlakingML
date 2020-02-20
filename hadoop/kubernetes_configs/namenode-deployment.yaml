@@ -34,6 +34,16 @@ spec:
             configMapKeyRef:
               key: CORE_CONF_hadoop_http_staticuser_user
               name: namenode-hadoop-env
+        - name: CORE_CONF_hadoop_proxyuser_hdfs_groups
+          valueFrom:
+            configMapKeyRef:
+              key: CORE_CONF_hadoop_proxyuser_hdfs_groups
+              name: namenode-hadoop-env
+        - name: CORE_CONF_hadoop_proxyuser_hdfs_hosts
+          valueFrom:
+            configMapKeyRef:
+              key: CORE_CONF_hadoop_proxyuser_hdfs_hosts
+              name: namenode-hadoop-env
         - name: CORE_CONF_hadoop_proxyuser_hue_groups
           valueFrom:
             configMapKeyRef:
@@ -246,6 +256,9 @@ spec:
           protocol: UDP
         - containerPort: 9000
         - containerPort: 8020
+        - containerPort: 4242
+        - containerPort: 4242
+          protocol: UDP
         resources: {}
       restartPolicy: Always
 status: {}

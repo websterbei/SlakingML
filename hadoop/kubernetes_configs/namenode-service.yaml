@@ -33,6 +33,13 @@ spec:
   - name: "8020"
     port: 8020
     targetPort: 8020
+  - name: "4242"
+    port: 4242
+    targetPort: 4242
+  - name: 4242-udp
+    port: 4242
+    protocol: UDP
+    targetPort: 4242
   selector:
     io.kompose.service: namenode
 status:
