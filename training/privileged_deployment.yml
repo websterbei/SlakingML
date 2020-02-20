@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: privileged-training-pytorch-base
+spec:
+  containers:
+  - name: pytorch-base
+    image: moatez/mongodb:0.0.1
+    securityContext:
+      capabilities:
+        add: ["CAP_SYS_ADMIN"]
