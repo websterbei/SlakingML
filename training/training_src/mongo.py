@@ -4,7 +4,10 @@ from bson.objectid import ObjectId
 
 import json
 
-with open("mongodb_config.json") as f:
+import os
+current_dir = os.path.dirname(__file__)
+
+with open(os.path.join(current_dir,"mongodb_config.json")) as f:
     mongodb_config = json.load(f)
 client = MongoClient(mongodb_config["url"])
 db = client.jobs
