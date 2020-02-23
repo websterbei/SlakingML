@@ -4,28 +4,38 @@ import json
 import uuid
 import os
 import sys
+import pyarrow as pa
 
 from utils import get_model_class_from_config, get_optimizer_from_model_class
 from mongo import get_job_object_by_job_id, update_job_status, update_job_progress
 from module_factory import get_nn_module_from_model_class
 
-from dataset_factory import CustomInterableDataset
+from dataset_factory import CustomIterableDataset
 from torch.utils.data import DataLoader
 
 
 # TODO: needs to add tons of error checking
 class Trainer():
     
-    def __init__(self, job_id, test=False, local_model=False):
+    def __init__(self, job_id, test=False, local_model=False, use_pyarrow=True):
         self.job_id = job_id
         training_job = get_job_object_by_job_id(job_id, test=local_model)
         model_class = get_model_class_from_config(training_job.get("model_config"))
         module = get_nn_module_from_model_class(model_class)
         data_config = json.loads(training_job["data_config"])
         
-        train_dataset = CustomInterableDataset(dataset_folder = os.path.join(DATASET_ROOT_DIR, data_config["train_dataset_path"]))
-        test_dataset = CustomInterableDataset(dataset_folder = os.path.join(DATASET_ROOT_DIR, data_config["test_dataset_path"]))
-        
+        self.use_pyarrow = use_pyarrow
+        if use_pyarrow:
+            self.fs = pa.hdfs.connect('namenode', port=9000, driver='libhdfs3')
+        train_dataset = CustomIterableDataset(dataset_folder = os.path.join(DATASET_ROOT_DIR, data_config["train_dataset_path"]), 
+                                              label_columns = data_config["label_columns"] if "label_columns" in data_config else ["label"],
+                                              feature_columns = data_config["feature_columns"] if "feature_columns" in data_config else None,
+                                              use_pyarrow = use_pyarrow)
+        test_dataset = CustomIterableDataset(dataset_folder = os.path.join(DATASET_ROOT_DIR, data_config["test_dataset_path"]),
+                                             label_columns = data_config["label_columns"] if "label_columns" in data_config else ["label"],
+                                             feature_columns = data_config["feature_columns"] if "feature_columns" in data_config else None,
+                                             use_pyarrow=use_pyarrow)
+
         batch_size = data_config["batch_size"]
         self.number_of_epochs = data_config["epochs"]
         self.train_loader = DataLoader(train_dataset, batch_size = batch_size)
@@ -50,9 +60,15 @@ class Trainer():
 
     def _save_model(self):
         print("Saving models......")
-        if not os.path.isdir(self.model_save_dir):
-            os.mkdir(self.model_save_dir)
-        torch.save(self.forward_net.state_dict(), self.full_path)
+        if self.use_pyarrow:
+            if not self.fs.exists(self.model_save_dir):
+                self.fs.mkdir(self.model_save_dir)
+            with self.fs.open(self.full_path, 'wb') as f:
+                torch.save(self.forward_net.state_dict(), f)
+        else:
+            if not os.path.isdir(self.model_save_dir):
+                os.mkdir(self.model_save_dir)
+            torch.save(self.forward_net.state_dict(), self.full_path)
         print("Model saved at {}".format(self.full_path))
         update_job_status(self.job_id, "successful", self.full_path)
         print("Job status synchronized")
@@ -94,18 +110,18 @@ class Trainer():
         self._print_metrics()
 
 if "-test" in sys.argv:
-    MODEL_SAVE_FOLDER = './'
-    DATASET_ROOT_DIR = './'
+    MODEL_SAVE_FOLDER = '../'
+    DATASET_ROOT_DIR = '../'
     job_id = sys.argv[-1]
     if "-local_model" in sys.argv:
-        trainer = Trainer(job_id, test=True, local_model=True)
+        trainer = Trainer(job_id, test=True, local_model=True, use_pyarrow=False)
     else:
-        trainer = Trainer(job_id, test=True)
+        trainer = Trainer(job_id, test=True, use_pyarrow=False)
 else:
-    MODEL_SAVE_FOLDER = '/HDFS/MODELS'
-    DATASET_ROOT_DIR = '/HDFS/DATASETS'
+    MODEL_SAVE_FOLDER = '/MODELS'
+    DATASET_ROOT_DIR = '/DATASETS'
     job_id = os.environ.get("SLAKING_JOB_ID")
-    trainer = Trainer(job_id)
+    trainer = Trainer(job_id, use_pyarrow=True)
 
 trainer.train()
 trainer.test()

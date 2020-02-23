@@ -3,16 +3,25 @@ import torch
 from torch.utils.data import IterableDataset
 import json
 import os
+import pyarrow as pa
+import pandas as pd
 
 # TODO: Error handling, change to multiworker version (only possible when multiple resource files exist?), handle image type
-class CustomInterableDataset(IterableDataset):
+class CustomIterableDataset(IterableDataset):
     
-    def __init__(self, dataset_folder, label_columns=["label"], feature_columns=None):
+    def __init__(self, dataset_folder, label_columns=["label"], feature_columns=None, use_pyarrow=True):
         # read metadata
+        self.use_pyarrow = use_pyarrow
+        if use_pyarrow:
+            self.fs = pa.hdfs.connect('namenode', port=9000, driver='libhdfs3')
         metadata = None
         try:
-            with open(os.path.join(dataset_folder, "metadata")) as f:
-                metadata = json.load(f)
+            if use_pyarrow:
+                with self.fs.open(os.path.join(dataset_folder, "metadata")) as f:
+                    metadata = json.load(f)
+            else:
+                with open(os.path.join(dataset_folder, "metadata")) as f:
+                    metadata = json.load(f)
         except:
             raise Exception("Did not find metadata file in given folder")
         # basic error checking
@@ -57,14 +66,17 @@ class CustomInterableDataset(IterableDataset):
 
     def __iter__(self):
         for resource_file in self.resource_files:
-            with open(resource_file) as f:
-                line_raw = f.readline().rstrip()
-                while line_raw:
-                    line = line_raw.split(",")
-                    features = [self._cast(line[ind], dtype) for ind, dtype in zip(self.feature_columns, self.feature_types)]
-                    if self.label_columns is not None:
-                        labels = [self._cast(line[ind], dtype) for ind, dtype in zip(self.label_columns, self.label_types)]
-                        yield np.array(features, dtype=np.float32), np.array(labels)
-                    else:
-                        yield np.array(features, dtype=np.float32)
-                    line_raw = f.readline().rstrip()
+            if self.use_pyarrow:
+                f = self.fs.open(resource_file)
+            else:
+                f = open(resource_file)
+            for chunk in pd.read_csv(f, chunksize=2000):
+                for _, line in chunk.iterrows():
+                    # features = [self._cast(line[ind], dtype) for ind, dtype in zip(self.feature_columns, self.feature_types)]
+                    # if self.label_columns is not None:
+                    #     labels = [self._cast(line[ind], dtype) for ind, dtype in zip(self.label_columns, self.label_types)]
+                    #     yield np.array(features, dtype=np.float32), np.array(labels)
+                    # else:
+                    #     yield np.array(features, dtype=np.float32)
+                    yield np.array(line[self.feature_columns], dtype=np.float32), np.array([line[self.label_columns]], dtype=np.int64)
+            f.close()

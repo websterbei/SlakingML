@@ -7,4 +7,5 @@ if [ ! -d $datadir ]; then
 fi
 
 cd training
-/miniconda/bin/python main.py -test 5e4efe4f079e34674989e1f8
+/miniconda/bin/python main.py
+# /miniconda/bin/python stall.py

@@ -44,13 +44,19 @@ def get_job_object_by_job_id(job_id, test=False):
         return training_job
 
 def update_job_status(job_id, status, model_save_location = None, close_connection=True):
-    update_delta = {}
-    update_delta["status"] = status
-    update_delta["model_save_location"] = model_save_location
-    db.jobs.update_one({"_id": ObjectId(job_id)}, {"$set": update_delta})
-    if close_connection:
-        client.close()
+    try:
+        update_delta = {}
+        update_delta["status"] = status
+        update_delta["model_save_location"] = model_save_location
+        db.jobs.update_one({"_id": ObjectId(job_id)}, {"$set": update_delta})
+        if close_connection:
+            client.close()
+    except:
+        print("Failed to update job status!")
 
 def update_job_progress(job_id, metrics):
-    for metric, value in metrics.items():
-        db.jobs.update_one({"_id": ObjectId(job_id)}, {"$push": {"metrics.{}".format(metric): value}}, upsert=True)
+    try:
+        for metric, value in metrics.items():
+            db.jobs.update_one({"_id": ObjectId(job_id)}, {"$push": {"metrics.{}".format(metric): value}}, upsert=True)
+    except:
+        print("Failed to update job progress!")

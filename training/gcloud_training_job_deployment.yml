@@ -1,12 +1,14 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: pytorch-base
+  name: model-training
 spec:
   template:
     spec:
       containers:
       - env:
+        - name: SLAKING_JOB_ID
+          value: 5e52ae88079e340a8289e1fa
         - name: CORE_CONF_fs_defaultFS
           valueFrom:
             configMapKeyRef:
@@ -229,8 +231,9 @@ spec:
             configMapKeyRef:
               key: YARN_CONF_yarn_timeline___service_hostname
               name: datanode-hadoop-env
-        image: websterbei/trainnode:v4
+        image: websterbei/trainnode:v1
         name: trainnode
+        imagePullPolicy: Always
         ports:
         - containerPort: 9866
           protocol: TCP
