@@ -25,6 +25,10 @@ def deploy():
             print("Error loading module")
             return "Error"
         return "Success"
+
+@deploy_app.route('/', methods=['GET'])
+def deploy():
+    return "Running"
       
 @deploy_app.route('/predict', methods=['POST'])
 def predict():
