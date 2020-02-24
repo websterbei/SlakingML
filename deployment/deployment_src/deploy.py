@@ -4,8 +4,8 @@ import json
 import uuid
 import os
 import sys
-training_dir = (os.path.abspath(os.path.join(os.path.dirname(__file__), '../..'))+ '/training/training_src/')
-sys.path.append(training_dir)
+# training_dir = (os.path.abspath(os.path.join(os.path.dirname(__file__), '../..'))+ '/training/training_src/')
+# sys.path.append(training_dir)
 
 
 from utils import get_model_class_from_config, get_optimizer_from_model_class
@@ -15,6 +15,7 @@ from module_factory import get_nn_module_from_model_class
 
 # from prepare_data import DeploymentInputDataset
 from torch.utils.data import DataLoader
+
 
 
 
@@ -51,6 +52,7 @@ class Deployer():
     def _load_model(self):
         print("Loading model: "+self.model_save_name)
         try: 
+            print(self.model_full_path)
             checkpoint = torch.load(self.model_full_path)
         except:
             raise Exception("Error loading module")

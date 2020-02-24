@@ -22,12 +22,12 @@ def deploy():
         try:
             _my_deployer = Deployer(job_id)
         except:
-            print("Error loading module")
+            print("Error init")
             return "Error"
         return "Success"
 
 @deploy_app.route('/', methods=['GET'])
-def deploy():
+def index():
     return "Running"
       
 @deploy_app.route('/predict', methods=['POST'])
