@@ -1,7 +1,7 @@
 To start running flask server:
 ```
 cd deployment/deployment_src
-FLASK_ENV=development FLASK_APP=deployy flask run
+FLASK_ENV=development FLASK_APP=deploy_app flask run
 ```
 run on local port 5000
 

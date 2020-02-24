@@ -27,9 +27,9 @@ def print_job_info(training_job):
 # # TODO: Error handling
 def get_job_object_by_job_id(job_id, test=False):
     if test: # Local test
-        with open("model_config") as f:
+        with open(os.path.join(current_dir,"model_config")) as f:
             model_config = "".join(f.readlines())
-        with open("data_config") as f:
+        with open(os.path.join(current_dir,"data_config")) as f:
             data_config = "".join(f.readlines())
         training_job = {}
         training_job["model_config"] = model_config

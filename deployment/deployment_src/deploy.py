@@ -31,7 +31,7 @@ THIS_FOLDER = os.path.dirname(os.path.abspath(__file__))
 class Deployer():
     
     def __init__(self, job_id):
-        training_job = get_job_object_by_job_id(job_id)
+        training_job = get_job_object_by_job_id(job_id,test=True)
         self.model_class = get_model_class_from_config(training_job.get("model_config"))
         self.module = get_nn_module_from_model_class(self.model_class)()
         
