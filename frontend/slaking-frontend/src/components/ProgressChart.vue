@@ -1,6 +1,6 @@
 <template>
   <div class="ProgressChart" ref="ProgressChart">
-    <chart :chart-data="datacollection" height=300></chart>
+    <chart :chart-data="datacollection" :height='height' :max-width="auto"></chart>
   </div>
 </template>
 
@@ -24,7 +24,9 @@ export default {
   },
   data() {
     return {
-      datacollection: null
+      datacollection: null,
+      height: 100,
+      width: 500
     };
   },
   components: {
