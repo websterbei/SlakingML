@@ -14,7 +14,7 @@
 //     ['#f72047', '#ffd200', '#1feaea'],
 //   ]
 // import PrismEditor from "vue-prism-editor";
-import Chart from "../components/Chart.js";
+import Chart from "@/plugins/Chart.js";
 
 export default {
   name: "ProgressChart",
@@ -51,7 +51,7 @@ export default {
             label: this.title,
             backgroundColor: 'lightblue',
             borderColor: 'lightblue',
-            fill: true,
+            fill: false,
             data: this.datapoints
           }
         ]
