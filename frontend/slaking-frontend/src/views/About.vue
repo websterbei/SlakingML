@@ -15,7 +15,7 @@
 
 <script>
 // import PrismEditor from "vue-prism-editor";
-import Chart from "../components/Chart.js"
+import Chart from "@/plugins/Chart.js"
 
 export default {
   data() {
