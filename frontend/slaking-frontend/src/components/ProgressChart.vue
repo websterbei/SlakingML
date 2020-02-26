@@ -52,7 +52,10 @@ export default {
             backgroundColor: 'lightblue',
             borderColor: 'lightblue',
             fill: false,
-            data: this.datapoints
+            data: this.datapoints,
+            pointStyle: 'line',
+            borderWidth: 2,
+            pointRadius: 0
           }
         ]
       };

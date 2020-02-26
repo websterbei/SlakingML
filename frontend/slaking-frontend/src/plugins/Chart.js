@@ -30,7 +30,8 @@ export default {
                 },
                 responsive: true,
                 maintainAspectRatio: false,
-                showLine :true,
+                showLine: true,
+                fill: false
             }
         }
     },
