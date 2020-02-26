@@ -3,6 +3,9 @@ var router = express.Router();
 var ObjectID = require('mongodb').ObjectID;
 var cors = require('cors');
 
+const k8s = require('@kubernetes/client-node');
+
+
 /* GET jobs listing. */
 router.get('/', cors(), function(req, res, next) {
   db = req.app.locals.dbClient.db("jobs");
