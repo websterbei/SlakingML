@@ -10,4 +10,7 @@ EXPOSE 3000
 
 RUN chmod a+x /slaking-backend/bin/www
 
-CMD ["/slaking-backend/bin/www"]
+WORKDIR /slaking-backend
+
+CMD ["./bin/www"]
+

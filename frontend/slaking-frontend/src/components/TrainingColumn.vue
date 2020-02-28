@@ -55,7 +55,7 @@ export default {
         model_name:"",
         author_name:"",
         // status:"",
-        data_config:"{\ncolumn_names: [label, feature1,feature2],\ncolumn _type: [image,integer,flaot],\nauthor_name: “”,\ndataset_name: “”,\nresource_files:[]\n}",
+        data_config:"{\n\t\"train_dataset_path\": \"fashion_mnist\", \n\t\"test_dataset_path\": \"fashion_mnist\", \n\t\"epochs\": 2,\n\t\"batch_size\": 20\n}",
         model_config:"class Model():\n"+
                       "    optimizer = \"adam\"  // CHANGE THIS\n"+
                       "    learning_rate = 0.0001 //CHANGE THIS\n"+

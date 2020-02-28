@@ -3,8 +3,9 @@ var router = express.Router();
 var ObjectID = require('mongodb').ObjectID;
 var cors = require('cors');
 
+const yamlTemplates = require('./yaml_templates')
 const k8s = require('@kubernetes/client-node');
-
+const k8sApi = require('./kubernetes_api_client');
 
 /* GET jobs listing. */
 router.get('/', cors(), function(req, res, next) {
@@ -40,12 +41,11 @@ router.get('/:jobId', cors(), function(req, res, next) {
       res.status(500);
       res.send("Failed to retrieve the list of jobs!");
     } else {
-      dbres.job_id = dbres._id;
+      dbres.job_id = jobId;
       res.send(dbres);
     }
   });
 });
-
 
 /* POST submit a new job */
 router.post('/', cors(), function(req, res, next) {
@@ -62,14 +62,21 @@ router.post('/', cors(), function(req, res, next) {
     author_name: authorName
   };
 
-  console.log(jobObject);
-
   db.collection("jobs").insertOne(jobObject, function(err, dbres) {
     if (err) {
       res.status(500);
-      res.send("Failed to submit the job!")
+      res.send("Failed to submit the job!");
     } else {
-      res.send({job_id: dbres.insertedId.toString()});
+      trainingJobIdString = dbres.insertedId.toString();
+      trainingJobDeploymentYamlString = yamlTemplates.getTrainingDeploymentYaml(trainingJobIdString);
+      const trainingJobDeploymentYaml = k8s.loadYaml(trainingJobDeploymentYamlString);
+      k8sApi.BatchV1Api.createNamespacedJob('default', trainingJobDeploymentYaml).then((response) => {
+        res.send({job_id: trainingJobIdString, training_job_status: "deployed"});
+      },
+      (err) => {
+        console.log(err);
+        res.send("Failed to start training job!");
+      });
     }
   });
 });

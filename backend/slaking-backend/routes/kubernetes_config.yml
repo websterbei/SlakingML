@@ -17,10 +17,10 @@ users:
   user:
     auth-provider:
       config:
-        access-token: ya29.ImbABy9spJYZd2IqpdXQ8FfLLw59AHWcohyVPjgbhlEsBCU4SRgR9LhR9QsqrXNFhhgcDV277vdnHRaWczUiLQxu0jUPR94rjgdoqfCx-TO9nlHLhZnwYHVf_Oe3ygoArE-Th-g0jFg
+        access-token: ya29.a0Adw1xeVRWjddra18vbS5YGf7BFaVkcKq4MX4QWI-6E_KCxGCax4SKn7yyiI5m3cscJ0hRQik5ywMMWUGbe4yRebMyptku-Sy-xkL1i8Ss3Z9w9EP0Fi68x0jammsIjr8AUBlomo-VSBLY_R9DF8X5Yjb0iN2lOHfF0sAwgWhGkxI
         cmd-args: config config-helper --format=json
         cmd-path: /Users/webster/Downloads/google-cloud-sdk/bin/gcloud
-        expiry: "2020-02-26T21:04:07Z"
+        expiry: "2020-02-28T02:00:08Z"
         expiry-key: '{.credential.token_expiry}'
         token-key: '{.credential.access_token}'
       name: gcp

@@ -7,10 +7,9 @@ var cors = require('cors');
 
 var indexRouter = require('./routes/index');
 var jobsRouter = require('./routes/jobs');
-var kubernetesRouter = require('./routes/kubernetes');
 
 var app = express();
-app.options('*', cors());
+app.use(cors());
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -24,7 +23,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/jobs', jobsRouter);
-app.use('/kubernetes', kubernetesRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
