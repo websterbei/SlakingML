@@ -1,5 +1,6 @@
 import io
 import json
+import os
 
 from deploy import Deployer
 from flask import Flask, jsonify, request
@@ -48,4 +49,9 @@ def predict():
 
 
 if __name__ == '__main__':
+    job_id = os.environ.get("SLAKING_JOB_ID")
+    try:
+        _my_deployer = Deployer(job_id)
+    except:
+        print("Error init")
     deploy_app.run(host='0.0.0.0', port=5000)

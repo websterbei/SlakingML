@@ -1,13 +1,6 @@
-FROM ubuntu
+FROM websterbei/pytorch-base:v1
 
-RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
-      wget \
-    && rm -rf /var/lib/apt/lists/*
-
-RUN wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh --no-check-certificate -O ~/miniconda.sh
-RUN /bin/bash ~/miniconda.sh -b -p /miniconda
-
-RUN /miniconda/bin/conda install pytorch flask pymongo
+RUN /miniconda/bin/conda install flask
 
 ADD ./deployment_src /deployment
 

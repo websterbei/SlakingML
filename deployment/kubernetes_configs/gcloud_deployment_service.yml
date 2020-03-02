@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: model-deployment
+spec:
+  selector:
+    app: model-deployment
+  ports:
+    - port: 5000
+      targetPort: 5000
+  type: LoadBalancer
