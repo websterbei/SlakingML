@@ -30,6 +30,7 @@ var server = http.createServer(app);
  */
 var MongoClient = require('mongodb').MongoClient;
 var url = "mongodb://mongodb:27017/";
+// var url = "mongodb://mongodb.tan90.tech:27017/";
 
 MongoClient.connect(url, function(err, dbClient) {
   if (err) throw err;
