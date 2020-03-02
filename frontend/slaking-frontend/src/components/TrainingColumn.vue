@@ -38,13 +38,14 @@
 
       <!-- <v-file-input show-size label="Model Config" v-model="model_file"></v-file-input> -->
       <!-- <v-file-input show-size label="Data Config"></v-file-input> -->
-      <v-btn v-on:click.prevent="post">Add Project</v-btn>
-      <v-btn> Start Training </v-btn>
+      <v-btn v-on:click.prevent="post">Start Training</v-btn>
     </v-col>
 </template>
 
 <script>
 import PrismEditor from "vue-prism-editor";
+import "prismjs/themes/prism.css";
+import "vue-prism-editor/dist/VuePrismEditor.css";
 import {backendAddress} from '@/configurations.js'
 export default {
   data() {

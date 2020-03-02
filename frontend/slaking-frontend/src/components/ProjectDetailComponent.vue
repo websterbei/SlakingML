@@ -1,7 +1,18 @@
 <template>
 
     <v-col>
+      <v-row>
         <v-row>
+        <h2>{{job.model_name}}</h2>
+      </v-row>
+      <v-row justify="end">
+        <v-btn fab dark  color="cyan" v-on:click.prevent="refresh">
+          <v-icon large dark>mdi-refresh</v-icon>
+        </v-btn>
+      </v-row>
+      </v-row>
+    
+        <!-- <v-row>
             <v-menu offset-y>
                 <template v-slot:activator="{ on }">
                     <v-btn
@@ -23,14 +34,22 @@
                     </v-list-item>
                 </v-list>
             </v-menu>
-        </v-row>
-        <p>Job ID: {{job.job_id}}</p>
-        <p>Model name: {{job.model_name}}</p>
-        <p>Author name: {{job.author_name}}</p>
-        <p>Model Configuration: {{job.model_config}}</p>
-        <p>Data Configuration: {{job.data_config}}</p>
+        </v-row> -->
+          <v-col>
+            <h4>Job ID:</h4>
+            <p>{{job.job_id}}</p>
+            <!-- <p>Model name: {{job.model_name}}</p> -->
+            <h4>Author name: </h4>
+            <p>{{job.author_name}}</p>
+            <h4>Model Configuration:</h4>
+            <code>{{job.model_config}}</code>
+            <p> </p>
+            <h4>Data Configuration:</h4>
+            <code>{{job.data_config}}</code>
+            <!-- <prism-editor label="Model Configuration" v-model="job.model_config" language="js" :line-numbers=true /> -->
+            <!-- <prism-editor label="Data Configuration" v-model="job.data_config" language="js" :line-numbers=true /> -->
+          </v-col>
 
-        <v-btn v-on:click.prevent="refresh">Refresh</v-btn>
 
     </v-col>
 </template>

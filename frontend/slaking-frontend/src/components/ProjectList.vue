@@ -1,11 +1,20 @@
 <template>
+<div class="projectlist" ref="projectlist">
     <v-col>
+      <v-row>
+        <h1 justify-start>Models List</h1>
+      <v-row justify="end">
+        <v-btn fab dark color="cyan" v-on:click.prevent="refresh">
+          <v-icon large dark>mdi-refresh</v-icon>
+        </v-btn>
+      </v-row>
+      </v-row>
+      <p> </p>
       <!-- <span>FOR DEBUG: return statement:{{returnstatement}}</span> -->
-      <v-btn v-on:click.prevent="refresh">Refresh</v-btn>
-      <v-list v-for="job in job_list" :key='job.job_id'>
+      <!-- <v-list v-for="job in job_list" :key='job.job_id'>
          <v-card
-            class="mx-auto"
             outlined
+
           >
           <v-list-item>
             <v-list-item-content>
@@ -24,9 +33,36 @@
               <v-btn v-on:click.prevent="deleteJob(job.job_id)" color='red' text>Delete</v-btn>
           </v-card-actions>
        </v-card>
-      </v-list>
+      </v-list> -->
+
+   <v-layout wrap>
+       <v-flex pa-3 md4 v-for="job in job_list" :key='job.job_id'>
+           <v-card
+           outlined
+           hover
+          >
+          <v-list-item>
+            <v-list-item-content>
+              <v-list-item-title class="headline mb-1">{{job.model_name}}</v-list-item-title>
+              <v-list-item-subtitle>Job ID: {{job.job_id}}</v-list-item-subtitle>
+            </v-list-item-content>
+          </v-list-item>
+      
+          <v-card-actions>
+              <router-link :to="{ name: 'ProjectDetail', params: { id:job.job_id } }" tag="v-btn">
+                <v-btn color='blue' text>View Details</v-btn>
+              </router-link>
+              <router-link :to="{ name: 'deployid', params: { id:job.job_id } }" tag="v-btn">
+                <v-btn color='green' text>Deploy</v-btn>
+              </router-link>
+              <v-btn v-on:click.prevent="deleteJob(job.job_id)" color='red' text>Delete</v-btn>
+          </v-card-actions>
+       </v-card>
+       </v-flex>
+   </v-layout>
       
     </v-col>
+</div>
 </template>
 
 <script>

@@ -3,10 +3,6 @@
     <h2>Home Page</h2>
     <v-row>
       <v-col>
-        <h3>Your Recent Projects</h3>
-        <ProjectList></ProjectList>
-      </v-col>
-      <v-col>
          <router-link to='/training' tag='v-list-item'>
             <v-list-item link>
                 <v-list-item-action>
@@ -34,8 +30,6 @@
 </template>
 
 <script>
-import ProjectList from '@/components/ProjectList'
 export default{
-  components: {ProjectList}
 }
 </script>

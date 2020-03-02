@@ -33,7 +33,7 @@
                     <v-icon>mdi-view-list</v-icon>
                 </v-list-item-action>
                 <v-list-item-content>
-                    <v-list-item-title>Projects List</v-list-item-title>
+                    <v-list-item-title>Model List</v-list-item-title>
                 </v-list-item-content>
             </v-list-item>
         </router-link>
@@ -44,7 +44,7 @@
                     <v-icon>mdi-shovel</v-icon>
                 </v-list-item-action>
                 <v-list-item-content>
-                    <v-list-item-title>Deploy Model</v-list-item-title>
+                    <v-list-item-title>Deployed Models</v-list-item-title>
                 </v-list-item-content>
             </v-list-item>
         </router-link>

@@ -1,8 +1,7 @@
 <template>
-  <div class="progress">
-    <h2>Projects Progress</h2>
+    <v-col align="start" align-items="start">
     <ProjectList></ProjectList>
-  </div>
+    </v-col>
 </template>
 
 <script>

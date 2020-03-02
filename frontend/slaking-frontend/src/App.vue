@@ -1,9 +1,11 @@
 <template>
   <v-app id="app">
     <Navbar></Navbar>
-    <v-content>
-      <v-container class="fill-height" fluid>
-        <router-view></router-view>
+    <v-content align="start">
+      <v-container fluid align="start">
+        <v-col align-items="start" align="start">
+        <router-view align="start"></router-view>
+        </v-col>
       </v-container>
     </v-content>
     <v-footer

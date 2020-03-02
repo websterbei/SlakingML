@@ -1,6 +1,5 @@
 <template>
   <div class="projectdetail">
-    <h2>Project Detail</h2>
     <ProjectDetailComponent></ProjectDetailComponent>
     <ProgressBar></ProgressBar>
   </div>
