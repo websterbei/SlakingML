@@ -2,52 +2,46 @@
 
     <v-col>
       <v-row>
-        <v-row>
-        <h2>{{job.model_name}}</h2>
+        
+      <v-row pa-3>
+        <h1>{{job.model_name}}</h1>
+      </v-row >
+
+      <v-layout row justify-end>
+        <v-row justify = "end" class="ma-2">
+        <v-tooltip bottom>
+          <template v-slot:activator={on}>
+            <v-btn class="mr-3" fab dark color='green' v-on="on" v-on:click.prevent="deployJob(job.job_id)" >
+              <v-icon dark>mdi-shovel</v-icon>
+            </v-btn>
+          </template>
+          <span>Deploy Model</span>
+        </v-tooltip>
+        <v-tooltip  bottom>
+          <template v-slot:activator={on}>
+            <v-btn class="ml-3"  fab dark  v-on="on" color="cyan" v-on:click.prevent="refresh">
+              <v-icon dark>mdi-refresh</v-icon>
+            </v-btn>
+          </template>
+          <span>Refresh</span>
+        </v-tooltip>
+        </v-row>
+      </v-layout>
+        
+      
       </v-row>
-      <v-row justify="end">
-        <v-btn fab dark  color="cyan" v-on:click.prevent="refresh">
-          <v-icon large dark>mdi-refresh</v-icon>
-        </v-btn>
-      </v-row>
-      </v-row>
-    
-        <!-- <v-row>
-            <v-menu offset-y>
-                <template v-slot:activator="{ on }">
-                    <v-btn
-                    color="primary"
-                    dark
-                    v-on="on"
-                    >
-                    Select a job
-                    </v-btn>
-                </template>
-                <v-list>
-                    <v-list-item
-                    v-for="id in job_id_list"
-                    :key="id"
-                    :value="id"
-                    @click="selectproject(id)"
-                    >
-                    <v-list-item-title>{{ id }}</v-list-item-title>
-                    </v-list-item>
-                </v-list>
-            </v-menu>
-        </v-row> -->
+  
           <v-col>
-            <h4>Job ID:</h4>
+            <h3>Job ID:</h3>
             <p>{{job.job_id}}</p>
             <!-- <p>Model name: {{job.model_name}}</p> -->
-            <h4>Author name: </h4>
+            <h3>Author name: </h3>
             <p>{{job.author_name}}</p>
-            <h4>Model Configuration:</h4>
+            <h3>Model Configuration:</h3>
             <code>{{job.model_config}}</code>
             <p> </p>
-            <h4>Data Configuration:</h4>
+            <h3>Data Configuration:</h3>
             <code>{{job.data_config}}</code>
-            <!-- <prism-editor label="Model Configuration" v-model="job.model_config" language="js" :line-numbers=true /> -->
-            <!-- <prism-editor label="Data Configuration" v-model="job.data_config" language="js" :line-numbers=true /> -->
           </v-col>
 
 
@@ -89,18 +83,24 @@ export default {
                   )
                 });
     },
-    selectproject: function(id){
-      this.job.job_id = id;
-      this.$http
-                .get(backendAddress + 'jobs/'+id)
-                .then((response)=>{
-                    this.job.job_id=response.data.job_id;
-                    this.job.data_config=response.data.data_config;
-                    this.job.model_config= response.data.model_config;
-                    this.job.model_name=response.data.model_name;
-                    this.job.author_name=response.data.author_name;
+    // selectproject: function(id){
+    //   this.$http
+    //             .get(backendAddress + 'jobs/'+id)
+    //             .then((response)=>{
+    //                 this.job.job_id=response.data.job_id;
+    //                 this.job.data_config=response.data.data_config;
+    //                 this.job.model_config= response.data.model_config;
+    //                 this.job.model_name=response.data.model_name;
+    //                 this.job.author_name=response.data.author_name;
 
-                });
+    //             });
+    // },
+    deployJob: function(id){
+      this.$http
+      .put(backendAddress + 'deployments/'+id)
+      .then((response)=>{
+          this.deploy_returnstatement = response
+      })
     }
   },
      
