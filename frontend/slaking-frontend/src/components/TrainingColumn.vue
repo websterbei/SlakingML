@@ -1,13 +1,18 @@
 <template>
-    <v-col>
-      <!-- <p>FOR DEBUG: return statement: {{job_added_status}}  model:{{job.model_config}} {{job.name}}</p> -->
+  
+    <v-col 
+      md="8">
+      <v-col padding-bottom>
       <p>Job ID: {{job.job_id}}</p>
+      </v-col>
+      <!-- <p>FOR DEBUG: return statement: {{job_added_status}}  model:{{job.model_config}} {{job.name}}</p> -->
       <!-- <p> Number: {{VersionNum}}</p> -->
       <v-text-field
       label="Project Name"
       placeholder="MyProject"
       v-model="job.model_name"
       required
+      outlined
       ></v-text-field>
     
       <v-text-field
@@ -15,6 +20,7 @@
       placeholder="author"
       v-model="job.author_name"
       required
+      outlined
       ></v-text-field>
 
       <!-- <v-text-field
@@ -34,7 +40,7 @@
       ></v-text-field> -->
 
       <h4>Enter your data configuration metadata in the below box:</h4>
-      <prism-editor label="Data Config" v-model="job.data_config" language="js" :line-numbers=true />
+      <prism-editor label="Data Config" v-model="job.data_config" language="js" line-numbers=true />
 
       <!-- <v-file-input show-size label="Model Config" v-model="model_file"></v-file-input> -->
       <!-- <v-file-input show-size label="Data Config"></v-file-input> -->
@@ -44,8 +50,9 @@
 
 <script>
 import PrismEditor from "vue-prism-editor";
-import "prismjs/themes/prism.css";
-import "vue-prism-editor/dist/VuePrismEditor.css";
+// import "prismjs/themes/prism.css";
+import "./prism-theme.css"
+import "./prism_editor.css"
 import {backendAddress} from '@/configurations.js'
 export default {
   data() {
@@ -72,7 +79,7 @@ export default {
                       "\n"+
                       "    def forward(self, x):\n"+
                       "        // YOUR CODE HERE",
-      },
+                      },
       job_added_status :"",
     }
   },
