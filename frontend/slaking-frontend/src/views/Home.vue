@@ -1,35 +1,17 @@
 <template>
-  <div class="home">
-    <h2>Home Page</h2>
-    <v-row>
-      <v-col>
-         <router-link to='/training' tag='v-list-item'>
-            <v-list-item link>
-                <v-list-item-action>
-                    <v-icon>mdi-plus-box</v-icon>
-                </v-list-item-action>
-                <v-list-item-content>
-                    <v-list-item-title>Train New Model</v-list-item-title>
-                </v-list-item-content>
-            </v-list-item>
-        </router-link>
-
-        <router-link to='/progress' tag='v-list-item'>
-            <v-list-item link>
-                <v-list-item-action>
-                    <v-icon>mdi-view-list</v-icon>
-                </v-list-item-action>
-                <v-list-item-content>
-                    <v-list-item-title>View all projects</v-list-item-title>
-                </v-list-item-content>
-            </v-list-item>
-        </router-link>
-      </v-col>
-    </v-row>
+  <div class="home" pa-4 ma-4>
+      <v-container justify-start>
+    <h1  pa-4 ma-4>Welcome to Slaking!</h1>
+    <HomeFlowChart></HomeFlowChart>
+      </v-container>
   </div>
 </template>
 
 <script>
+import HomeFlowChart from '@/components/HomeFlowChart.vue'
 export default{
+      components: {
+    HomeFlowChart
+  },
 }
 </script>
