@@ -36,7 +36,7 @@
       </v-list> -->
 
    <v-layout wrap>
-       <v-flex pa-3 md4 v-for="job in job_list" :key='job.job_id'>
+       <v-flex pa-3 md5 v-for="job in job_list" :key='job.job_id'>
            <v-card
            outlined
            hover
@@ -53,7 +53,7 @@
                 <v-btn color='blue' text>View Details</v-btn>
               </router-link>
               <router-link :to="{ name: 'deployid', params: { id:job.job_id } }" tag="v-btn">
-                <v-btn color='green' text>Deploy</v-btn>
+                <v-btn color='green' v-on:click.prevent="deployJob(job.job_id)" text>Deploy</v-btn>
               </router-link>
               <v-btn v-on:click.prevent="deleteJob(job.job_id)" color='red' text>Delete</v-btn>
           </v-card-actions>
@@ -72,7 +72,8 @@ export default {
     return {
       job_id_list:[],
       job_list:[],
-      returnstatement:""
+      returnstatement:"",
+      deploy_returnstatement:""
       }
   },
   methods: {
@@ -133,6 +134,13 @@ export default {
             }
         }
         );
+    },
+    deployJob: function(id){
+      this.$http
+      .put(backendAddress + 'deployments/'+id)
+      .then((response)=>{
+          this.deploy_returnstatement = response
+      })
     }
   },
      

@@ -1,12 +1,12 @@
 <template>
   <div class="deploy">
-    <DeployColumn></DeployColumn>
+    <DeployedList></DeployedList>
   </div>
 </template>
 
 <script>
-import DeployColumn from '@/components/DeployColumn'
+import DeployedList from '@/components/DeployedList'
 export default{
-  components: {DeployColumn}
+  components: {DeployedList}
 }
 </script>
