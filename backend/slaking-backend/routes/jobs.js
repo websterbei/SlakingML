@@ -39,7 +39,7 @@ router.get('/:jobId', cors(), function(req, res, next) {
   db.collection("jobs").findOne({"_id": ObjectID(jobId)}, function(err, dbres) {
     if (err) {
       res.status(500);
-      res.send("Failed to retrieve the list of jobs!");
+      res.send({status: "Failed to retrieve job list"});
     } else {
       dbres.job_id = jobId;
       res.send(dbres);
@@ -65,7 +65,7 @@ router.post('/', cors(), function(req, res, next) {
   db.collection("jobs").insertOne(jobObject, function(err, dbres) {
     if (err) {
       res.status(500);
-      res.send("Failed to submit the job!");
+      res.send({status: "Failed to submit job"});
     } else {
       trainingJobIdString = dbres.insertedId.toString();
       trainingJobDeploymentYamlString = yamlTemplates.getTrainingDeploymentYaml(trainingJobIdString);
@@ -75,7 +75,7 @@ router.post('/', cors(), function(req, res, next) {
       },
       (err) => {
         console.log(err);
-        res.send("Failed to start training job!");
+        res.send({status: "Failed to start training"});
       });
     }
   });
@@ -89,7 +89,7 @@ router.delete('/:jobId', cors(), function(req, res, next) {
   db.collection("jobs").deleteOne({"_id": ObjectID(jobId)}, function(err, dbres) {
     if (err) {
       res.status(500);
-      res.send("Failed to retrieve the list of jobs!");
+      res.send({status: "Failed to remove job"});
     } else {
       res.send({status: "successful"});
     }

@@ -18,7 +18,7 @@ router.get('/', cors(), function(req, res, next) {
             try {
                 return {
                     job_id: item.metadata.name.substring('model-deployment-'.length),
-                    endpoint: item.status.loadBalancer.ingress[0].ip + '/predict'
+                    endpoint: item.status.loadBalancer.ingress[0].ip + ':5000/predict'
                 };
             } catch(error) {
                 return {
@@ -32,7 +32,7 @@ router.get('/', cors(), function(req, res, next) {
     (err) => {
         console.log(err);
         res.status(500);
-        res.send("Failed to look up for deployments!");
+        res.send({status: "Failed to lookup deployments"});
     });
 });
 
@@ -51,21 +51,41 @@ router.put('/:jobId', cors(), function(req, res, next) {
                 deploymentExposureYamlString = yamlTemplates.getModelDeploymentServiceYaml(jobId);
                 const deploymentExposureYaml = k8s.loadYaml(deploymentExposureYamlString);
                 k8sApi.CoreV1Api.createNamespacedService("default", deploymentExposureYaml).then((response) => {
-                    res.send({job_id: jobId, deployment_status: "deployed"});
+                    res.send({status: "successful"});
                 },
                 (err) => {
                     console.log(err);
                     res.status(500);
-                    res.send("Failed to expose deployed service!")
+                    res.send({status: "Failed to create service"});
                 });
             },
             (err) => {
               console.log(err);
               res.status(500);
-              res.send("Failed to create deployment!");
+              res.send({status: "Failed to create deployment"});
             });
         }
       });
+});
+
+
+/* DELETE method to remove a deployment */
+router.delete('/:jobId', cors(), function(req, res, next) {
+    jobId = req.params.jobId;
+    deploymentName = `model-deployment-${jobId}`;
+    k8sApi.CoreV1Api.deleteNamespacedService(deploymentName, 'default').then((response) => {
+        k8sApi.ExtensionsV1beta1Api.deleteNamespacedDeployment(deploymentName, 'default').then((response) => {
+            res.send({status: "successful"});
+        },
+        (error) => {
+            res.status(500);
+            res.return({status: `Failed to remove deployment ${deploymentName}`});    
+        });
+    },
+    (err) => {
+        res.status(500);
+        res.return({status: `Failed to remove service ${deploymentName}`});
+    });
 });
 
 module.exports = router;
