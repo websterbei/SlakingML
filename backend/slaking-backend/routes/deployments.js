@@ -18,7 +18,7 @@ router.get('/', cors(), function(req, res, next) {
             try {
                 return {
                     job_id: item.metadata.name.substring('model-deployment-'.length),
-                    endpoint: item.status.loadBalancer.ingress[0].ip + '/predict'
+                    endpoint: item.status.loadBalancer.ingress[0].ip + ':5000/predict'
                 };
             } catch(error) {
                 return {
