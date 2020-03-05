@@ -25,7 +25,18 @@ router.get('/', cors(), function(req, res, next) {
         res.status(500);
         res.send("Failed to retrieve the list of jobs!");
       } else {
-        res.send({jobs: dbres});
+        jobDetails = [];
+        for(var job of dbres) {
+          jobDetails.push({
+            job_id: job._id,
+            data_config: job.data_config,
+            model_config: job.model_config,
+            model_name: job.model_name,
+            author_name: job.author_name,
+            status: job.status 
+          });
+        }
+        res.send({jobs: jobDetails});
       }
     });
   };
@@ -41,7 +52,9 @@ router.get('/:jobId', cors(), function(req, res, next) {
       res.status(500);
       res.send({status: "Failed to retrieve job list"});
     } else {
-      dbres.job_id = jobId;
+      if(dbres) {
+        dbres.job_id = jobId;
+      }
       res.send(dbres);
     }
   });
@@ -68,7 +81,7 @@ router.post('/', cors(), function(req, res, next) {
       res.send({status: "Failed to submit job"});
     } else {
       trainingJobIdString = dbres.insertedId.toString();
-      trainingJobDeploymentYamlString = yamlTemplates.getTrainingDeploymentYaml(trainingJobIdString);
+      trainingJobDeploymentYamlString = yamlTemplates.getTrainingDeploymentYaml(trainingJobIdString, modelName);
       const trainingJobDeploymentYaml = k8s.loadYaml(trainingJobDeploymentYamlString);
       k8sApi.BatchV1Api.createNamespacedJob('default', trainingJobDeploymentYaml).then((response) => {
         res.send({job_id: trainingJobIdString, training_job_status: "deployed"});

@@ -54,28 +54,11 @@ export default {
   },
   methods: {
     refresh: function(){
-      this.job_id_list = [];
       this.job_list = [];
-      var id;
       this.$http
-        .get(backendAddress + 'jobs')
+        .get(backendAddress + 'jobs?details=true')
         .then((response)=>{
-          this.job_id_list = response.data.jobs
-          for(id of this.job_id_list){
-              this.$http
-                .get(backendAddress + 'jobs/'+id)
-                .then((response)=>{
-                  this.job_list.push(
-                    {
-                      job_id:response.data.job_id,
-                      data_config:response.data.data_config,
-                      model_config: response.data.model_config,
-                      model_name:response.data.model_name,
-                      author_name:response.data.author_name
-                    }
-                  )
-                });
-            }
+          this.job_list = response.data.jobs
         }
         );
     },
@@ -87,27 +70,11 @@ export default {
           this.returnstatement = response
         }
       })
-      this.job_id_list = [];
       this.job_list = [];
       this.$http
-        .get(backendAddress + 'jobs')
+        .get(backendAddress + 'jobs?details=true')
         .then((response)=>{
-          this.job_id_list = response.data.jobs
-          for(id of this.job_id_list){
-              this.$http
-                .get(backendAddress + 'jobs/'+id)
-                .then((response)=>{
-                  this.job_list.push(
-                    {
-                      job_id:response.data.job_id,
-                      data_config:response.data.data_config,
-                      model_config: response.data.model_config,
-                      model_name:response.data.model_name,
-                      author_name:response.data.author_name
-                    }
-                  )
-                });
-            }
+          this.job_list = response.data.jobs
         }
         );
     },
@@ -122,26 +89,10 @@ export default {
      
   computed: {},
   created(){
-      var id;
       this.$http
-        .get(backendAddress + 'jobs')
+        .get(backendAddress + 'jobs?details=true')
         .then((response)=>{
-          this.job_id_list = response.data.jobs
-          for(id of this.job_id_list){
-              this.$http
-                .get(backendAddress + 'jobs/'+id)
-                .then((response)=>{
-                  this.job_list.push(
-                    {
-                      job_id:response.data.job_id,
-                      data_config:response.data.data_config,
-                      model_config: response.data.model_config,
-                      model_name:response.data.model_name,
-                      author_name:response.data.author_name
-                    }
-                  )
-                });
-            }
+          this.job_list = response.data.jobs
         }
         );
   }

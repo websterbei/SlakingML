@@ -1,17 +1,19 @@
 
-function getTrainingDeploymentYaml(training_job_id) {
+function getTrainingDeploymentYaml(trainingJobId, modelName) {
     yamlString = `
     apiVersion: batch/v1
     kind: Job
     metadata:
-      name: model-training-${training_job_id}
+      name: model-training-${trainingJobId}
+      annotations:
+        modelName: ${modelName}
     spec:
       template:
         spec:
           containers:
           - env:
             - name: SLAKING_JOB_ID
-              value: ${training_job_id}
+              value: ${trainingJobId}
             - name: CORE_CONF_fs_defaultFS
               valueFrom:
                 configMapKeyRef:
@@ -235,7 +237,7 @@ function getTrainingDeploymentYaml(training_job_id) {
                   key: YARN_CONF_yarn_timeline___service_hostname
                   name: datanode-hadoop-env
             image: websterbei/trainnode:v1
-            name: trainnode-${training_job_id}
+            name: trainnode-${trainingJobId}
             imagePullPolicy: Always
             ports:
             - containerPort: 9866
@@ -249,26 +251,28 @@ function getTrainingDeploymentYaml(training_job_id) {
     return yamlString;
 }
 
-function getModelDeploymentYaml(deployment_job_id) {
+function getModelDeploymentYaml(deploymentJobId, modelName) {
   yamlString = `
   apiVersion: extensions/v1beta1
   kind: Deployment
   metadata:
     labels:
-      app: model-deployment-${deployment_job_id}
-    name: model-deployment-${deployment_job_id}
+      app: model-deployment-${deploymentJobId}
+    name: model-deployment-${deploymentJobId}
+    annotations:
+      modelName: ${modelName}
   spec:
     replicas: 1
     strategy: {}
     template:
       metadata:
         labels:
-          app: model-deployment-${deployment_job_id}
+          app: model-deployment-${deploymentJobId}
       spec:
         containers:
         - env:
           - name: SLAKING_JOB_ID
-            value: ${deployment_job_id}
+            value: ${deploymentJobId}
           - name: CLUSTER_NAME
             value: test
           - name: CORE_CONF_fs_defaultFS
@@ -492,7 +496,7 @@ function getModelDeploymentYaml(deployment_job_id) {
                 key: YARN_CONF_yarn_timeline___service_hostname
                 name: namenode-hadoop-env
           image: websterbei/deploymentnode:v5
-          name: model-deployment-${deployment_job_id}
+          name: model-deployment-${deploymentJobId}
           ports:
           - containerPort: 5000
           resources: {}
@@ -502,15 +506,17 @@ function getModelDeploymentYaml(deployment_job_id) {
   return yamlString;
 }
 
-function getModelDeploymentServiceYaml(deployment_job_id) {
+function getModelDeploymentServiceYaml(deploymentJobId, modelName) {
   yamlString = `
   apiVersion: v1
   kind: Service
   metadata:
-    name: model-deployment-${deployment_job_id}
+    name: model-deployment-${deploymentJobId}
+    annotations:
+      modelName: ${modelName}
   spec:
     selector:
-      app: model-deployment-${deployment_job_id}
+      app: model-deployment-${deploymentJobId}
     ports:
       - port: 5000
         targetPort: 5000

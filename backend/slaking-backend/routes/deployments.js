@@ -11,23 +11,25 @@ const k8sApi = require('./kubernetes_api_client');
 /* GET method to list all deployments */
 router.get('/', cors(), function(req, res, next) {
     k8sApi.CoreV1Api.listNamespacedService("default").then((response) => {
-        model_deployment_entries = response.response.body.items.filter((item) => {
+        modelDeploymentEntries = response.response.body.items.filter((item) => {
             return item.metadata.name.startsWith("model-deployment") ? true : false;
         });
-        deployed_model_endpoints = model_deployment_entries.map((item) => {
+        deployedModelEndpoints = modelDeploymentEntries.map((item) => {
             try {
                 return {
+                    model_name: item.metadata.annotations.modelName,
                     job_id: item.metadata.name.substring('model-deployment-'.length),
                     endpoint: item.status.loadBalancer.ingress[0].ip + ':5000/predict'
                 };
             } catch(error) {
                 return {
+                    model_name: item.metadata.annotations.modelName,
                     job_id: item.metadata.name.substring('model-deployment-'.length),
                     endpoint: "Pending"
                 };
             }
         });
-        res.send(deployed_model_endpoints);
+        res.send(deployedModelEndpoints);
     },
     (err) => {
         console.log(err);
@@ -42,13 +44,16 @@ router.put('/:jobId', cors(), function(req, res, next) {
     db = req.app.locals.dbClient.db("jobs");
     db.collection("jobs").findOne({"_id": ObjectID(jobId)}, function(err, dbres) {
         if (err) {
+          res.status(500);
+          res.send({status: "Failed to lookup for the given job!"});
+        } else if (dbres == null) {
           res.status(404);
-          res.send("The given job id does not exist in database!");
+          res.send({status: "Job does not exist in the database!"});
         } else {
-            modelDeploymentYamlString = yamlTemplates.getModelDeploymentYaml(jobId);
+            modelDeploymentYamlString = yamlTemplates.getModelDeploymentYaml(jobId, dbres.model_name);
             const modelDeploymentYaml = k8s.loadYaml(modelDeploymentYamlString);
             k8sApi.ExtensionsV1beta1Api.createNamespacedDeployment('default', modelDeploymentYaml).then((response) => {
-                deploymentExposureYamlString = yamlTemplates.getModelDeploymentServiceYaml(jobId);
+                deploymentExposureYamlString = yamlTemplates.getModelDeploymentServiceYaml(jobId, dbres.model_name);
                 const deploymentExposureYaml = k8s.loadYaml(deploymentExposureYamlString);
                 k8sApi.CoreV1Api.createNamespacedService("default", deploymentExposureYaml).then((response) => {
                     res.send({status: "successful"});

@@ -44,15 +44,8 @@
         class="elevation-1"
         :search="search"
       >
-      <template v-slot:items="item">
-          <tr>
-          <td>{{ item.model_name }}</td>
-          <td class="text-xs-right">{{ item.job_id }}</td>
-          <td class="text-xs-right">{{ item.endpoint }}</td>
-          <td>
-            <v-btn v-on:click.prevent="deleteDeployment(job.job_id)" color="red" text>Terminate</v-btn>  
-          </td>
-          </tr>
+      <template v-slot:item.actions="{ item }">
+            <v-chip color="red" dark v-on:click.prevent="deleteDeployment(item.job_id)">Terminate</v-chip>
         </template>
         <template v-slot:no-results>
           <v-alert :value="true" color="error" icon="warning">
@@ -86,59 +79,33 @@ export default {
         },
         { text: 'Job ID', value: 'job_id' },
         { text: 'Endpoint', value: 'endpoint' },
-        { text: 'Actions', value: '', sortable: false }
+        { text: 'Actions', value: 'actions', sortable: false }
       ],
       }
   },
   methods: {
     refresh: function(){
-      var job;
       this.complete_list = [];
       this.$http
         .get(backendAddress + 'deployments')
         .then((response)=>{
-          for(job of response.data){
-              this.$http
-                .get(backendAddress + 'jobs/'+job.job_id)
-                .then((response)=>{
-                  this.complete_list.push(
-                    {
-                      job_id:job.job_id,
-                      model_name:response.data.model_name,
-                      endpoint:job.endpoint
-                    }
-                  )
-                });
-            }
+          this.complete_list = response.data;
         }
         );
     },
-    deleteItem: function(job){
+    deleteDeployment: function(job_id){
       this.$http
-      .delete(backendAddress + 'deployments/'+job.job_id)
+      .delete(backendAddress + 'deployments/'+job_id)
       .then((response)=>{
         if(!response.data.status==="successful"){
-          this.returnstatement = response
+          this.returnstatement = response;
         }
       });
-      var tmpjob;
       this.complete_list = [];
       this.$http
         .get(backendAddress + 'deployments')
         .then((response)=>{
-          for(tmpjob of response.data){
-              this.$http
-                .get(backendAddress + 'jobs/'+tmpjob.job_id)
-                .then((response)=>{
-                  this.complete_list.push(
-                    {
-                      job_id:tmpjob.job_id,
-                      model_name:response.data.model_name,
-                      endpoint:tmpjob.endpoint
-                    }
-                  )
-                });
-            }
+          this.complete_list = response.data;
         }
         );
     }
@@ -147,24 +114,11 @@ export default {
      
   computed: {},
   created(){
-      var job;
       this.complete_list = [];
       this.$http
         .get(backendAddress + 'deployments')
         .then((response)=>{
-          for(job of response.data){
-              this.$http
-                .get(backendAddress + 'jobs/'+job.job_id)
-                .then((response)=>{
-                  this.complete_list.push(
-                    {
-                      job_id:job.job_id,
-                      model_name:response.data.model_name,
-                      endpoint:job.endpoint
-                    }
-                  )
-                });
-            }
+          this.complete_list = response.data;
         }
         );
   }
