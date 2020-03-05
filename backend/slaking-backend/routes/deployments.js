@@ -79,17 +79,18 @@ router.delete('/:jobId', cors(), function(req, res, next) {
     jobId = req.params.jobId;
     deploymentName = `model-deployment-${jobId}`;
     k8sApi.CoreV1Api.deleteNamespacedService(deploymentName, 'default').then((response) => {
-        k8sApi.ExtensionsV1beta1Api.deleteNamespacedDeployment(deploymentName, 'default', propagationPolicy='foreground').then((response) => {
+        k8sApi.ExtensionsV1beta1Api.deleteNamespacedDeployment(deploymentName, 'default', undefined, undefined, undefined, undefined, 'Background').then((response) => {
             res.send({status: "successful"});
         },
         (error) => {
             res.status(500);
-            res.return({status: `Failed to remove deployment ${deploymentName}`});    
+            console.log(error);
+            res.send({status: `Failed to remove deployment ${deploymentName}`}); 
         });
     },
     (err) => {
         res.status(500);
-        res.return({status: `Failed to remove service ${deploymentName}`});
+        res.send({status: `Failed to remove service ${deploymentName}`});
     });
 });
 

@@ -105,7 +105,7 @@ router.delete('/:jobId', cors(), function(req, res, next) {
       res.send({status: "Failed to remove job from database"});
     } else {
       trainingJobName = `model-training-${jobId}`;
-      k8sApi.BatchV1Api.deleteNamespacedJob(trainingJobName, 'default', propagationPolicy='foreground').then((response) => {
+      k8sApi.BatchV1Api.deleteNamespacedJob(trainingJobName, 'default', undefined, undefined, undefined, undefined, 'Background').then((response) => {
         res.send({status: "successful"});
       },
       (err) => {
