@@ -102,9 +102,16 @@ router.delete('/:jobId', cors(), function(req, res, next) {
   db.collection("jobs").deleteOne({"_id": ObjectID(jobId)}, function(err, dbres) {
     if (err) {
       res.status(500);
-      res.send({status: "Failed to remove job"});
+      res.send({status: "Failed to remove job from database"});
     } else {
-      res.send({status: "successful"});
+      trainingJobName = `model-training-${jobId}`;
+      k8sApi.BatchV1Api.deleteNamespacedJob(trainingJobName, 'default').then((response) => {
+        res.send({status: "successful"});
+      },
+      (err) => {
+        res.status(500);
+        res.send({status: "Failed to remove job from kubernetes"});
+      });
     }
   });
 });
