@@ -79,7 +79,7 @@ router.delete('/:jobId', cors(), function(req, res, next) {
     jobId = req.params.jobId;
     deploymentName = `model-deployment-${jobId}`;
     k8sApi.CoreV1Api.deleteNamespacedService(deploymentName, 'default').then((response) => {
-        k8sApi.ExtensionsV1beta1Api.deleteNamespacedDeployment(deploymentName, 'default').then((response) => {
+        k8sApi.ExtensionsV1beta1Api.deleteNamespacedDeployment(deploymentName, 'default', propagationPolicy='foreground').then((response) => {
             res.send({status: "successful"});
         },
         (error) => {
