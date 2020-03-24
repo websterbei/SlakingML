@@ -6,9 +6,9 @@
 </template>
 
 <script>
-import ProjectDetailComponent from '@/components/ProjectDetailComponent'
-import ProgressBar from '@/components/ProgressBar'
-export default{
-  components: {ProjectDetailComponent,ProgressBar}
-}
+import ProjectDetailComponent from "@/components/ProjectDetailComponent";
+import ProgressBar from "@/components/ProgressBar";
+export default {
+  components: { ProjectDetailComponent, ProgressBar }
+};
 </script>

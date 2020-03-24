@@ -5,8 +5,8 @@
 </template>
 
 <script>
-import DeployedList from '@/components/DeployedList'
-export default{
-  components: {DeployedList}
-}
+import DeployedList from "@/components/DeployedList";
+export default {
+  components: { DeployedList }
+};
 </script>

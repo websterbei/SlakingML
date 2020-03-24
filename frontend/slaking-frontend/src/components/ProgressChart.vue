@@ -1,19 +1,10 @@
 <template>
   <div class="ProgressChart" ref="ProgressChart">
-    <chart :chart-data="datacollection" :height='height' :max-width="auto"></chart>
+    <chart :chart-data="datacollection" :height="height" :max-width="auto"></chart>
   </div>
 </template>
 
 <script>
-// const gradients = [
-//     ['#222'],
-//     ['#42b3f4'],
-//     ['red', 'orange', 'yellow'],
-//     ['purple', 'violet'],
-//     ['#00c6ff', '#F0F', '#FF0'],
-//     ['#f72047', '#ffd200', '#1feaea'],
-//   ]
-// import PrismEditor from "vue-prism-editor";
 import Chart from "@/plugins/Chart.js";
 
 export default {
@@ -30,7 +21,6 @@ export default {
     };
   },
   components: {
-    // PrismEditor,
     Chart
   },
   mounted() {
@@ -43,17 +33,16 @@ export default {
         label.push(i);
       }
 
-      
       this.datacollection = {
         labels: label,
         datasets: [
           {
             label: this.title,
-            backgroundColor: 'lightblue',
-            borderColor: 'lightblue',
+            backgroundColor: "lightblue",
+            borderColor: "lightblue",
             fill: false,
             data: this.datapoints,
-            pointStyle: 'line',
+            pointStyle: "line",
             borderWidth: 2,
             pointRadius: 0
           }

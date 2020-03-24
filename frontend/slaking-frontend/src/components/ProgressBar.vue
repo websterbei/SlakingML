@@ -8,8 +8,6 @@
 </template>
 
 <script>
-
-
 import { backendAddress } from "@/configurations.js";
 import ProgressChart from "@/components/ProgressChart.vue";
 
@@ -19,7 +17,7 @@ export default {
   },
   data: () => ({
     metrics: [],
-    values: [],
+    values: []
   }),
   created() {
     var job_id = this.$route.params.id;

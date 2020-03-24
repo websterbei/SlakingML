@@ -6,8 +6,8 @@
 </template>
 
 <script>
-import TrainingColumn from '@/components/TrainingColumn'
-export default{
-  components: {TrainingColumn}
-}
+import TrainingColumn from "@/components/TrainingColumn";
+export default {
+  components: { TrainingColumn }
+};
 </script>
