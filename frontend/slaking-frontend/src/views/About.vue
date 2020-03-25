@@ -1,15 +1,18 @@
 <template>
   <div class="about" ref="about">
     <h2>Testing page</h2>
+    <DragAndDrop></DragAndDrop>
   </div>
 </template>
 
+
 <script>
+import DragAndDrop from "@/components/DragAndDrop"
 export default {
   data() {
-    return {};
   },
   components: {
+    DragAndDrop
   },
   methods: {}
 };

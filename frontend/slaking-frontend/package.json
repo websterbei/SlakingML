@@ -20,6 +20,7 @@
     "vue-prism-editor": "^0.3.0",
     "vue-resource": "^1.5.1",
     "vue-router": "^3.1.3",
+    "vue-simple-flowchart": "^0.1.8",
     "vuetify": "^2.1.0",
     "vuex": "^3.1.2"
   },

@@ -11,6 +11,8 @@ import "prismjs";
 import VuePrismEditor from "vue-prism-editor";
 import vuechartjs from 'vue-chartjs'
 import VuePrism from 'vue-prism'
+// import SimpleFlowchart from 'vue-simple-flowchart';
+// import 'vue-simple-flowchart/dist/vue-flowchart.css';
 Vue.use(VuePrism);
 
 Vue.use(vuechartjs);

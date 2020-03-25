@@ -1,0 +1,101 @@
+g[data-v-295297bd] {
+    cursor: pointer
+}
+
+.flowchart-node[data-v-67208d28] {
+    -webkit-box-sizing: border-box;
+    -webkit-transform-origin: top left;
+    background: #fff;
+    border: none;
+    box-sizing: border-box;
+    cursor: move;
+    height: 80px;
+    margin: 0;
+    opacity: .9;
+    position: absolute;
+    transform-origin: top left;
+    width: 80px;
+    z-index: 1
+}
+
+.flowchart-node .node-main[data-v-67208d28] {
+    text-align: center
+}
+
+.flowchart-node .node-main .node-type[data-v-67208d28] {
+    background: rgb(255, 176, 85);
+    color: #fff;
+    font-size: 13px;
+    padding: 6px;
+    min-height: 25px
+}
+
+.flowchart-node .node-main .node-label[data-v-67208d28] {
+    font-size: 13px
+}
+
+.flowchart-node .node-port[data-v-67208d28] {
+    -webkit-transform: translate(-50%);
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 100px;
+    height: 12px;
+    left: 50%;
+    position: absolute;
+    transform: translate(-50%);
+    width: 12px
+}
+
+.flowchart-node .node-port[data-v-67208d28]:hover {
+    background: rgb(255, 176, 85);
+    border: 1px solid rgb(255, 176, 85)
+}
+
+.flowchart-node .node-input[data-v-67208d28] {
+    top: -8px
+}
+
+.flowchart-node .node-output[data-v-67208d28] {
+    bottom: -8px
+}
+
+.flowchart-node .node-delete[data-v-67208d28] {
+    background: #fff;
+    border: 1px solid rgb(255, 176, 85);
+    border-radius: 100px;
+    color: rgb(255, 176, 85);
+    cursor: pointer;
+    font-size: 12px;
+    height: 14px;
+    position: absolute;
+    right: -6px;
+    text-align:center;
+    top: -6px;
+    width: 14px
+}
+
+.flowchart-node .node-delete[data-v-67208d28]:hover {
+    background: rgb(255, 176, 85);
+    color: #fff
+}
+
+.selected[data-v-67208d28] {
+    -webkit-box-shadow: 0 0 0 2px rgb(255, 176, 85);
+    box-shadow: 0 0 0 2px rgb(255, 176, 85)
+}
+
+.flowchart-container[data-v-8730bea4] {
+    background: #ddd;
+    margin: 0;
+    overflow: scroll;
+    position: relative;
+    height: 800px;
+    width: 50%;
+}
+
+.flowchart-container svg[data-v-8730bea4] {
+    cursor: -webkit-grab;
+    cursor: grab;
+    height: 800px
+
+}
