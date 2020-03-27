@@ -20,6 +20,7 @@ from torch.utils.data import DataLoader
 class Trainer():
     
     def __init__(self, job_id, local_test=False, use_pyarrow=True):
+        print(local_test)
         self.job_id = job_id
         self.local_test = local_test
         # Lookup training job object from Mongo database, mongo database configuration in mongodb_config.json
@@ -129,7 +130,7 @@ class Trainer():
 class DistributedTrainer(Trainer):
     
     def __init__(self, job_id, rank, world_size, master_address, master_port, local_test=False, use_pyarrow=True):
-        super().__init__(self, job_id, local_test=local_test, use_pyarrow=use_pyarrow)
+        super().__init__(job_id, local_test=local_test, use_pyarrow=use_pyarrow)
         self.world_size = world_size
         self.rank = rank
         self.master_address = master_address
@@ -147,8 +148,15 @@ class DistributedTrainer(Trainer):
         self.train_loader = DataLoader(train_dataset, batch_size = self.batch_size)
         self.test_loader = DataLoader(test_dataset, batch_size = self.batch_size)
 
+        # Set up distributed training environment
+        self._distributed_training_setup()
+
         # Create distributed net
+        _forward_net = self.module()
         self.forward_net = DistributedDataParallel(self.module())
+        self.forward_net.metrics = _forward_net.metrics
+        self.forward_net.loss = _forward_net.loss
+        self.forward_net.add_to_metric = _forward_net.add_to_metric
         # Create optimizer
         self.optimizer = get_optimizer_from_model_class(self.model_class, self.forward_net)
 
@@ -156,9 +164,6 @@ class DistributedTrainer(Trainer):
         self.model_save_name = self.training_job["model_name"] + '-' + str(uuid.uuid1())
         self.model_save_dir = os.path.join(MODEL_SAVE_FOLDER, self.training_job["model_name"])
         self.full_path = os.path.join(self.model_save_dir, self.model_save_name)
-
-        # Set up distributed training environment
-        self._distributed_training_setup()
 
         # Update job status, only the master node will update job status
         if rank == 0:
@@ -199,10 +204,10 @@ class DistributedTrainer(Trainer):
 
 
 if "-distributed" in sys.argv:
-    rank = os.environ.get("SLAKING_RANK")
-    world_size = os.environ.get("SLAKING_WORLD_SIZE")
+    rank = int(os.environ.get("SLAKING_RANK"))
+    world_size = int(os.environ.get("SLAKING_WORLD_SIZE"))
     master_address = os.environ.get("SLAKING_MASTER_ADDRESS")
-    master_port = os.environ.get("SLAKING_MASTER_PORT")
+    master_port = int(os.environ.get("SLAKING_MASTER_PORT"))
     if "-test" in sys.argv:
         MODEL_SAVE_FOLDER = '../'
         DATASET_ROOT_DIR = '../'
