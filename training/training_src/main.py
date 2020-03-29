@@ -20,7 +20,6 @@ from torch.utils.data import DataLoader
 class Trainer():
     
     def __init__(self, job_id, local_test=False, use_pyarrow=True):
-        print(local_test)
         self.job_id = job_id
         self.local_test = local_test
         # Lookup training job object from Mongo database, mongo database configuration in mongodb_config.json
@@ -136,10 +135,12 @@ class DistributedTrainer(Trainer):
         self.master_address = master_address
         self.master_port = master_port
 
-        train_dataset = CustomIterableDataset(dataset_folder = os.path.join(DATASET_ROOT_DIR, self.data_config["train_dataset_path"]), 
+        train_dataset = CustomDistributedIterableDataset(dataset_folder = os.path.join(DATASET_ROOT_DIR, self.data_config["train_dataset_path"]), 
                                               label_columns = self.data_config["label_columns"] if "label_columns" in self.data_config else ["label"],
                                               feature_columns = self.data_config["feature_columns"] if "feature_columns" in self.data_config else None,
-                                              use_pyarrow = use_pyarrow)
+                                              use_pyarrow = use_pyarrow,
+                                              rank = self.rank,
+                                              world_size=self.world_size)
         test_dataset = CustomIterableDataset(dataset_folder = os.path.join(DATASET_ROOT_DIR, self.data_config["test_dataset_path"]),
                                              label_columns = self.data_config["label_columns"] if "label_columns" in self.data_config else ["label"],
                                              feature_columns = self.data_config["feature_columns"] if "feature_columns" in self.data_config else None,
