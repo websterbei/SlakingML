@@ -204,11 +204,12 @@ class DistributedTrainer(Trainer):
             self._save_model()
 
 
-if "-distributed" in sys.argv:
-    rank = int(os.environ.get("SLAKING_RANK"))
-    world_size = int(os.environ.get("SLAKING_WORLD_SIZE"))
-    master_address = os.environ.get("SLAKING_MASTER_ADDRESS")
-    master_port = int(os.environ.get("SLAKING_MASTER_PORT"))
+
+rank = int(os.environ.get("SLAKING_RANK", -1))
+world_size = int(os.environ.get("SLAKING_WORLD_SIZE", -1))
+master_address = os.environ.get("SLAKING_MASTER_ADDRESS", -1)
+master_port = int(os.environ.get("SLAKING_MASTER_PORT", -1))
+if world_size > 1:
     if "-test" in sys.argv:
         MODEL_SAVE_FOLDER = '../'
         DATASET_ROOT_DIR = '../'
