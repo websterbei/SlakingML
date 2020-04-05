@@ -210,6 +210,10 @@ world_size = int(os.environ.get("SLAKING_WORLD_SIZE", -1))
 master_address = os.environ.get("SLAKING_MASTER_ADDRESS", -1)
 master_port = int(os.environ.get("SLAKING_MASTER_PORT", -1))
 if world_size > 1:
+    print("Distributed Trainer Rank: {}".format(rank))
+    print("Distributed Trainer World Size: {}".format(world_size))
+    print("Distributed Trainer Master Address: {}".format(master_address))
+    print("Distributed Trainer Master Port: {}".format(master_port))
     if "-test" in sys.argv:
         MODEL_SAVE_FOLDER = '../'
         DATASET_ROOT_DIR = '../'
