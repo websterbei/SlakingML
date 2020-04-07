@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var async = require('async');
 var ObjectID = require('mongodb').ObjectID;
 var cors = require('cors');
 
@@ -66,11 +67,13 @@ router.post('/', cors(), function(req, res, next) {
   modelConfig = req.body.model_config;
   modelName = req.body.model_name;
   authorName = req.body.author_name;
+  trainingConfig = JSON.parse(req.body.training_config || "{}");
   db = req.app.locals.dbClient.db("jobs");
 
   var jobObject = {
     data_config: dataConfig,
     model_config: modelConfig,
+    training_config: trainingConfig,
     model_name: modelName,
     author_name: authorName
   };
@@ -81,14 +84,20 @@ router.post('/', cors(), function(req, res, next) {
       res.send({status: "Failed to submit job"});
     } else {
       trainingJobIdString = dbres.insertedId.toString();
-      trainingJobDeploymentYamlString = yamlTemplates.getTrainingDeploymentYaml(trainingJobIdString, modelName);
-      const trainingJobDeploymentYaml = k8s.loadYaml(trainingJobDeploymentYamlString);
+      if(trainingConfig.num_trainer > 1) {
+        trainingJobDeploymentYamlString = yamlTemplates.getDistributedTrainingDeploymentYaml(trainingJobIdString, modelName, trainingConfig.num_trainer);
+      } else {
+        trainingJobDeploymentYamlString = yamlTemplates.getTrainingDeploymentYaml(trainingJobIdString, modelName);
+      }
+      trainingJobDeploymentYaml = k8s.loadYaml(trainingJobDeploymentYamlString);
       k8sApi.BatchV1Api.createNamespacedJob('default', trainingJobDeploymentYaml).then((response) => {
         res.send({job_id: trainingJobIdString, training_job_status: "deployed"});
       },
       (err) => {
         console.log(err);
-        res.send({status: "Failed to start training"});
+        // TODO: remove already launched jobs
+        res.status(500);
+        res.send({status: "Failed to launch training job"});
       });
     }
   });

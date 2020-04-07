@@ -80,3 +80,14 @@ class CustomIterableDataset(IterableDataset):
                     #     yield np.array(features, dtype=np.float32)
                     yield np.array(line[self.feature_columns], dtype=np.float32), np.array([line[self.label_columns]], dtype=np.int64)
             f.close()
+
+class CustomDistributedIterableDataset(CustomIterableDataset):
+    
+    # params rank and world_size are used to create data partition
+    def __init__(self, dataset_folder, label_columns=["label"], feature_columns=None, use_pyarrow=True, rank=0, world_size=2):
+        super().__init__(dataset_folder, label_columns=label_columns, feature_columns=feature_columns, use_pyarrow=use_pyarrow)
+        # We require that the number of splits of training data to be a multiple of total number of nodes for even work load distribution
+        if len(self.resource_files) % world_size != 0: 
+            raise Exception("Dataset partition needs to be a multiple of training nodes")
+        # subsetting the list of resource files
+        self.resource_files = [self.resource_files[index] for index in range(rank, len(self.resource_files), world_size)]
