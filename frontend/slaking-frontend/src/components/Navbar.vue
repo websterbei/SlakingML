@@ -46,6 +46,17 @@
           </v-list-item>
         </router-link>
 
+        <router-link to="/codebuilder" tag="v-list-item">
+          <v-list-item link>
+            <v-list-item-action>
+              <v-icon>mdi-sitemap</v-icon>
+            </v-list-item-action>
+            <v-list-item-content>
+              <v-list-item-title>Code Builder</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </router-link>
+
         <router-link to="/about" tag="v-list-item">
           <v-list-item link>
             <v-list-item-action>

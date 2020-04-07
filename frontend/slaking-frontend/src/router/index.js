@@ -6,6 +6,7 @@ import Deploy from '@/views/Deploy.vue'
 import Progress from '@/views/Progress.vue'
 import ProjectDetail from '@/views/ProjectDetail.vue'
 import About from '@/views/About.vue'
+import CodeBuilder from '@/views/CodeBuilder.vue'
 
 Vue.use(VueRouter)
 
@@ -53,6 +54,12 @@ const routes = [
     path: '/projectdetail/:id',
     name: 'ProjectDetail',
     component: ProjectDetail
+  },
+
+  {
+    path: '/codebuilder',
+    name: 'CodeBuilder',
+    component: CodeBuilder
   }
 ]
 

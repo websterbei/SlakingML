@@ -57,6 +57,13 @@ export default {
         link: "/deploy"
       },
       {
+        color: "orange lighten-1",
+        icon: "mdi-sitemap",
+        title: "Dagger",
+        description: "Click to construct your PyTorch model using our no-code builder",
+        link: "/codebuilder"
+      },
+      {
         color: "indigo",
         icon: "mdi-information",
         title: "Info and Documentation",

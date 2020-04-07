@@ -31,7 +31,8 @@ g[data-v-295297bd] {
 }
 
 .flowchart-node .node-main .node-label[data-v-67208d28] {
-    font-size: 13px
+    font-size: 9px;
+    line-height: 1.5em
 }
 
 .flowchart-node .node-port[data-v-67208d28] {
@@ -69,7 +70,7 @@ g[data-v-295297bd] {
     height: 14px;
     position: absolute;
     right: -6px;
-    text-align:center;
+    text-align: center;
     top: -6px;
     width: 14px
 }
@@ -87,15 +88,14 @@ g[data-v-295297bd] {
 .flowchart-container[data-v-8730bea4] {
     background: #ddd;
     margin: 0;
-    overflow: scroll;
+    overflow: hidden;
     position: relative;
     height: 800px;
-    width: 50%;
+    width: 40%;
 }
 
 .flowchart-container svg[data-v-8730bea4] {
     cursor: -webkit-grab;
     cursor: grab;
     height: 800px
-
 }

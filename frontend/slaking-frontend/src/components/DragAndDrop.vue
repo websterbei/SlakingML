@@ -1,10 +1,9 @@
 <template>
   <div class="drag-drop" ref="drag-drop">
-    <p>{{message}}</p>
-    <h2>Drag And Drop</h2>
+    <!-- <p>{{this.message}}</p> -->
     <v-col>
       <v-row>
-        <v-col class="d-flex" cols="12" sm="6" style="padding-bottom: 0px; height: 82px">
+        <v-col class="d-flex" style="padding-bottom: 0px; height: 82px">
           <v-select v-model="newBlock" :items="blockTypes" label="Block Type" outlined></v-select>
         </v-col>
         <v-list
@@ -78,7 +77,7 @@ export default {
   data() {
     return {
       message: "",
-      pytorch_code: "placeholder",
+      pytorch_code: '//Press "Generate Code" to generate model code',
       modelParameters: {
         optimizer: "adam",
         learning_rate: "0.0001",
@@ -88,61 +87,67 @@ export default {
       },
       newBlock: "",
       newBlockParams: {
+        padding: 2,
+        stride: "None",
+        start_dim: 1,
+        dimension: 2,
         in: 0,
-        out: 0
+        out: 0,
+        kernel_size: 1,
+        padding_mode: "zeros"
       },
-      blockTypes: ["input", "linear", "add", "concat", "output"],
+      blockTypes: [
+        "input",
+        "Linear",
+        "add",
+        "concat",
+        "Conv",
+        "Flatten",
+        "MaxPool",
+        "AvgPool",
+        "output"
+      ],
       blockParams: {
-        linear: ["in", "out"],
+        Linear: ["in", "out"],
         add: [],
         concat: [],
         input: ["in"],
-        output: ["out"]
+        output: ["out"],
+        Conv: [
+          "dimension",
+          "in",
+          "out",
+          "kernel_size",
+          "padding",
+          "stride",
+          "padding_mode"
+        ],
+        Flatten: ["start_dim"],
+        MaxPool: ["dimension", "kernel_size", "stride", "padding"],
+        AvgPool: ["dimension", "kernel_size", "stride", "padding"]
       },
-      nextid: "3",
+      nextid: 3,
       chart_data: {
         centerX: 1024,
         centerY: 140,
         scale: 1,
         nodes: [
           {
-            id: "1",
-            label: "",
+            id: 1,
+            label: "id: 1",
             type: "input",
             x: -780,
             y: -120
           },
           {
-            id: "2",
-            label: "",
+            id: 2,
+            label: "id: 2",
             type: "output",
             x: -780,
             y: 550
-          },
-          {
-            id: "3",
-            label: "fortesting",
-            type: "linear",
-            x: -780,
-            y: 250,
-            parameters: {
-              in: 0,
-              out: 0
-            }
           }
         ],
-        links: [
-          {
-            id: 0,
-            from: "1",
-            to: "3"
-          },
-          {
-            id: 1,
-            from: "3",
-            to: "2"
-          }
-        ]
+        links: []
       }
     };
   },
@@ -151,15 +156,24 @@ export default {
   },
   methods: {
     addBlock: function() {
-      var labelstring = "";
+      if (this.newBlock == "") {
+        return;
+      }
+      let in_nodes = this.newBlockParams.in;
+      let out_nodes = this.newBlockParams.out;
+      var labelstring = "id: " + this.nextid + ", ";
       var param = "";
+      let count = 0;
       for (param in this.blockParams[this.newBlock]) {
-        labelstring =
-          labelstring +
-          this.blockParams[this.newBlock][param] +
-          ":" +
-          this.newBlockParams[this.blockParams[this.newBlock][param]] +
-          ", ";
+        if (count < 3) {
+          labelstring =
+            labelstring +
+            this.blockParams[this.newBlock][param] +
+            ":" +
+            this.newBlockParams[this.blockParams[this.newBlock][param]] +
+            ", ";
+        }
+        count++;
       }
       this.chart_data.nodes.push({
         id: this.nextid,
@@ -167,10 +181,20 @@ export default {
         y: -100,
         type: this.newBlock,
         label: labelstring,
-        parameters: this.newBlockParams
+        parameters: {
+          in: in_nodes,
+          out: out_nodes,
+          kernel_size: this.newBlockParams.kernel_size,
+          padding_mode: this.newBlockParams.padding_mode,
+          padding: this.newBlockParams.padding,
+          stride: this.newBlockParams.stride,
+          dimension: this.newBlockParams.dimension,
+          start_dim: this.newBlockParams.start_dim
+        }
       });
-      var next = parseInt(this.nextid) + 1;
-      this.nextid = next.toString;
+      // var next = parseInt(this.nextid) + 1;
+      // let nextStr = next.toString;
+      this.nextid += 1;
     },
     createCode: function() {
       var state = {
