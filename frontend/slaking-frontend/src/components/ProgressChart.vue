@@ -8,11 +8,6 @@
 import Chart from "@/plugins/Chart.js";
 
 export default {
-  name: "ProgressChart",
-  props: {
-    datapoints: [],
-    title: String
-  },
   data() {
     return {
       datacollection: null,
@@ -22,6 +17,11 @@ export default {
   },
   components: {
     Chart
+  },
+  name: "ProgressChart",
+  props: {
+    datapoints: [],
+    title: String
   },
   mounted() {
     this.fillData();
