@@ -61,6 +61,7 @@ export default {
   },
   methods: {
     refresh: function() {
+      console.log("clickclick\n");
       this.complete_list = [];
       this.$http.get(backendAddress + "deployments").then(response => {
         this.complete_list = response.data;
