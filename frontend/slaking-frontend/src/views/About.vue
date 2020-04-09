@@ -1,25 +1,21 @@
 <template>
   <div class="about" ref="about">
-    <h2>Testing page</h2>
-    <DragAndDrop></DragAndDrop>
+    <h2>Slaking ML</h2>
+    <h4>--a scalable machine learning pipeline on Kubernetes</h4>
+    <p>{{authors}}</p>
   </div>
 </template>
 
 
 <script>
-import DragAndDrop from "@/components/DragAndDrop"
 export default {
   data() {
+    return {
+      authors:
+        "\n\n\n      Authors:\n      Joey Junyu Liang\n      Webster Bei Yijie"
+    };
   },
-  components: {
-    DragAndDrop
-  },
+  components: {},
   methods: {}
 };
 </script>
-
-<style>
-.my-editor {
-  height: 300px;
-}
-</style>

@@ -8,19 +8,11 @@
 
 
 <script>
-import DragAndDrop from "@/components/DragAndDrop"
+import DragAndDrop from "@/components/DragAndDrop";
 export default {
-  data() {
-  },
   components: {
     DragAndDrop
-  },
-  methods: {}
+  }
 };
 </script>
 
-<style>
-.my-editor {
-  height: 300px;
-}
-</style>

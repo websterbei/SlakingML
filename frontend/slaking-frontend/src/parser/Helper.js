@@ -81,6 +81,7 @@ export function forward_linear(node) {
       forward_func +
       "        " +
       "out_" +
+      
       node.id +
       " = self.linear" +
       node.id +
