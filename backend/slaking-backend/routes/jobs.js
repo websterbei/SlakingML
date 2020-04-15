@@ -67,7 +67,7 @@ router.post('/', cors(), function(req, res, next) {
   modelConfig = req.body.model_config;
   modelName = req.body.model_name;
   authorName = req.body.author_name;
-  trainingConfig = JSON.parse(req.body.training_config || "{}");
+  trainingConfig = req.body.training_config || {};
   db = req.app.locals.dbClient.db("jobs");
 
   var jobObject = {

@@ -28,6 +28,18 @@
     />
     <h4>Enter your data configuration metadata in the below box:</h4>
     <prism-editor label="Data Config" v-model="job.data_config" language="js" line-numbers="true" />
+    
+    <h4>Additional training configuration options:</h4>
+    <br>
+    <br>
+    <v-slider
+        v-model="job.training_config.num_trainer"
+        min="1"
+        max="8"
+        label="Number of Trainers"
+        thumb-label="always"
+      ></v-slider>
+
     <v-btn v-on:click.prevent="post">Start Training</v-btn>
   </v-col>
 </template>
@@ -63,7 +75,8 @@ export default {
           "        // YOUR CODE HERE\n" +
           "\n" +
           "    def forward(self, x):\n" +
-          "        // YOUR CODE HERE"
+          "        // YOUR CODE HERE",
+        training_config: {num_trainer: 1}
       },
       job_added_status: ""
     };
@@ -75,7 +88,8 @@ export default {
           model_name: this.job.model_name,
           author_name: this.job.author_name,
           model_config: this.job.model_config,
-          data_config: this.job.data_config
+          data_config: this.job.data_config,
+          training_config: this.job.training_config
         })
         .then(response => (this.job.job_id = response.data.job_id));
     }
