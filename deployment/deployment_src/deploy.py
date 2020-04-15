@@ -39,8 +39,13 @@ class Deployer():
         try:
             self.module.load_state_dict(checkpoint)
             self.module.eval()
-        except: 
-            raise Exception("Error loading state dict")
+        except:
+            try:
+                self.module = torch.nn.DataParallel(self.module)
+                self.module.load_state_dict(checkpoint)
+                self.module.eval()
+            except:
+                raise Exception("Error loading state dict")
         
         print("Model succesfully loaded.")
 

@@ -767,6 +767,7 @@ function getModelDeploymentYaml(deploymentJobId, modelName) {
                 key: YARN_CONF_yarn_timeline___service_hostname
                 name: namenode-hadoop-env
           image: websterbei/deploymentnode:v5
+          imagePullPolicy: Always
           name: model-deployment-${deploymentJobId}
           ports:
           - containerPort: 5000
