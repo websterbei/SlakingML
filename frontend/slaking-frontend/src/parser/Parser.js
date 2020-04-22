@@ -42,10 +42,10 @@ export function Parser(state) {
   var metrics = "        self.metrics = [Metric_Accuracy()]\n\n";
 
   var loss_func =
-    "     # y_: label\n     # y: model output from forward method\n     def loss(self, y, y_):\n          return self.lossFn(y, y_.view(-1))\n";
+    "     # y_: label\n     # y: model output from forward method\n     def loss(self, y, y_):\n         return self.lossFn(y, y_.view(-1))\n";
   var add_to_metric_func =
-    "     # This method is optional, only used when metrics \n     # other than loss is desired\n     def add_to_metric(self, y, y_):\n          y_decoded = torch.argmax(y, dim=1)\n          self.metrics[0].append(y_decoded, y_.view(-1))\n";
-  var forward_func = "    def forward(self, x):\n        out_1 = x\n";
+    "     # This method is optional, only used when metrics \n     # other than loss is desired\n     def add_to_metric(self, y, y_):\n         y_decoded = torch.argmax(y, dim=1)\n         self.metrics[0].append(y_decoded, y_.view(-1))\n";
+  var forward_func = "     def forward(self, x):\n         out_1 = x\n";
 
   // construct graph
   let graph = new Map();
@@ -58,6 +58,7 @@ export function Parser(state) {
   var input_node = graph.get(1);
   var queue = [input_node];
   var visited = [];
+  var last_node_name;
   while (queue.length > 0) {
     var node = queue.shift();
     if (!visited.includes(node)) {
@@ -71,7 +72,7 @@ export function Parser(state) {
             code: "",
           };
         } else {
-          forward_func += tmp;
+          forward_func += " "+tmp;
         }
       } else if (node.type == "Conv") {
         tmp = forward_conv(node);
@@ -81,7 +82,7 @@ export function Parser(state) {
             code: "",
           };
         } else {
-          forward_func += tmp;
+          forward_func += " "+tmp;
         }
       } else if (node.type == "add") {
         tmp = forward_add(node);
@@ -91,7 +92,7 @@ export function Parser(state) {
             code: "",
           };
         } else {
-          forward_func += tmp;
+          forward_func += " "+tmp;
         }
       } else if (node.type == "concat") {
         forward_func += forward_concat(node);
@@ -99,6 +100,8 @@ export function Parser(state) {
         forward_func += forward_pool(node);
       } else if (node.type == "Flatten") {
         forward_func += forward_flatten(node);
+      } else if (node.type == "output") {
+        last_node_name = "out_"+node.in_nodes[0];
       }
 
       for (var i in node.out_nodes) {
@@ -106,7 +109,7 @@ export function Parser(state) {
       }
     }
   }
-  forward_func = forward_func + "        return F.softmax(out_2,dim=1)\n";
+  forward_func = forward_func + "         return F.softmax(" + last_node_name + ",dim=1)\n";
 
   var outputcode =
     header +
