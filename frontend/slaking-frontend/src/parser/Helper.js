@@ -11,7 +11,7 @@ export function GenerateInitFunctions(graph) {
       out_size = node.parameters.out;
       linear_init =
         linear_init +
-        "        self.linear" +
+        "         self.linear" +
         id +
         " = nn.Linear(" +
         in_size +
@@ -24,7 +24,7 @@ export function GenerateInitFunctions(graph) {
       out_size = node.parameters.out;
       linear_init =
         linear_init +
-        "        self.conv" +
+        "         self.conv" +
         id +
         " = nn.Conv" +
         node.parameters.dimension +
@@ -45,7 +45,7 @@ export function GenerateInitFunctions(graph) {
     } else if (node.type == "MaxPool" || node.type == "AvgPool") {
       linear_init =
         linear_init +
-        "        self.pool" +
+        "         self.pool" +
         id +
         " = nn." +
         node.type +
@@ -60,7 +60,7 @@ export function GenerateInitFunctions(graph) {
     } else if (node.type == "Flatten") {
       linear_init =
         linear_init +
-        "        self.flatten" +
+        "         self.flatten" +
         id +
         " = nn." +
         node.type +
@@ -79,7 +79,7 @@ export function forward_linear(node) {
   } else {
     forward_func =
       forward_func +
-      "        " +
+      "         " +
       "out_" +
       
       node.id +
@@ -90,7 +90,7 @@ export function forward_linear(node) {
       ")\n";
     forward_func =
       forward_func +
-      "         " +
+      "          " +
       "out_" +
       node.id +
       " = F.relu(" +
@@ -108,7 +108,7 @@ export function forward_add(node) {
   }
   forward_func =
     forward_func +
-    "        " +
+    "         " +
     "out_" +
     node.id +
     " = " +
@@ -121,7 +121,7 @@ export function forward_add(node) {
 }
 
 export function forward_concat(node) {
-  var forward_func = "        " + "out_" + node.id + " = torch.cat(";
+  var forward_func = "         " + "out_" + node.id + " = torch.cat(";
   for (var idx in node.in_nodes) {
     if (idx == 0) forward_func = forward_func + "out_" + node.in_nodes[idx];
     else forward_func = forward_func + ", out_" + node.in_nodes[idx];
@@ -137,7 +137,7 @@ export function forward_conv(node) {
   } else {
     forward_func =
       forward_func +
-      "        " +
+      "         " +
       "out_" +
       node.id +
       " = self.conv" +
@@ -147,7 +147,7 @@ export function forward_conv(node) {
       ")\n";
     forward_func =
       forward_func +
-      "         " +
+      "          " +
       "out_" +
       node.id +
       " = F.relu(" +
@@ -165,7 +165,7 @@ export function forward_pool(node) {
   } else {
     forward_func =
       forward_func +
-      "        " +
+      "         " +
       "out_" +
       node.id +
       " = self.pool" +
@@ -184,7 +184,7 @@ export function forward_flatten(node) {
   } else {
     forward_func =
       forward_func +
-      "        " +
+      "         " +
       "out_" +
       node.id +
       " = self.flatten" +

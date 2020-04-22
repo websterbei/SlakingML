@@ -72,7 +72,7 @@ export function Parser(state) {
             code: "",
           };
         } else {
-          forward_func += " "+tmp;
+          forward_func += tmp;
         }
       } else if (node.type == "Conv") {
         tmp = forward_conv(node);
@@ -82,7 +82,7 @@ export function Parser(state) {
             code: "",
           };
         } else {
-          forward_func += " "+tmp;
+          forward_func += tmp;
         }
       } else if (node.type == "add") {
         tmp = forward_add(node);
@@ -92,7 +92,7 @@ export function Parser(state) {
             code: "",
           };
         } else {
-          forward_func += " "+tmp;
+          forward_func += tmp;
         }
       } else if (node.type == "concat") {
         forward_func += forward_concat(node);
