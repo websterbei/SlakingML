@@ -90,7 +90,7 @@ export function forward_linear(node) {
       ")\n";
     forward_func =
       forward_func +
-      "          " +
+      "         " +
       "out_" +
       node.id +
       " = F.relu(" +
@@ -147,7 +147,7 @@ export function forward_conv(node) {
       ")\n";
     forward_func =
       forward_func +
-      "          " +
+      "         " +
       "out_" +
       node.id +
       " = F.relu(" +

@@ -37,9 +37,9 @@ export function Parser(state) {
 
   var initialize_func =
     "     # initialize method is called once before \n     # forward and loss methods are called\n     def initialize(self):\n";
-  var lossFn = "        self.lossFn = nn." + params.loss_func + "()\n";
+  var lossFn = "         self.lossFn = nn." + params.loss_func + "()\n";
   var linear_init = "";
-  var metrics = "        self.metrics = [Metric_Accuracy()]\n\n";
+  var metrics = "         self.metrics = [Metric_Accuracy()]\n\n";
 
   var loss_func =
     "     # y_: label\n     # y: model output from forward method\n     def loss(self, y, y_):\n         return self.lossFn(y, y_.view(-1))\n";
