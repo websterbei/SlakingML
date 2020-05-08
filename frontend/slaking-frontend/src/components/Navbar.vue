@@ -1,3 +1,10 @@
+<!--
+  @Author: Webster Bei Yijie, Joey Junyu Liang
+  @Date: 5/8/2020, 3:11:08 PM
+  @Email: yijie.bei@duke.edu, junyu.liang@duke.edu
+-->
+
+
 <template>
   <div class="Navbar">
     <v-navigation-drawer v-model="drawer" app>

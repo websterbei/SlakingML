@@ -1,3 +1,10 @@
+<!--
+  @Author: Webster Bei Yijie, Joey Junyu Liang
+  @Date: 5/8/2020, 3:11:16 PM
+  @Email: yijie.bei@duke.edu, junyu.liang@duke.edu
+-->
+
+
 <template>
   <v-col class="text-center">
     <h3>Training Progress</h3>

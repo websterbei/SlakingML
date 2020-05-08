@@ -1,3 +1,10 @@
+<!--
+  @Author: Webster Bei Yijie, Joey Junyu Liang
+  @Date: 5/8/2020, 3:11:22 PM
+  @Email: yijie.bei@duke.edu, junyu.liang@duke.edu
+-->
+
+
 <template>
   <v-col>
     <v-row pa-3>

@@ -1,3 +1,8 @@
+# @Author: Webster Bei Yijie, Joey Junyu Liang
+# @Date: 5/8/2020, 3:13:04 PM
+# @Email: yijie.bei@duke.edu, junyu.liang@duke.edu
+
+
 import torch.nn as nn
 
 def nn_module_init(self):

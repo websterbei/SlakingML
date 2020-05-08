@@ -1,3 +1,10 @@
+<!--
+  @Author: Webster Bei Yijie, Joey Junyu Liang
+  @Date: 5/8/2020, 3:11:19 PM
+  @Email: yijie.bei@duke.edu, junyu.liang@duke.edu
+-->
+
+
 <template>
   <div class="ProgressChart" ref="ProgressChart">
     <chart :chart-data="datacollection" :height="height" :max-width="auto"></chart>

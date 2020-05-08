@@ -1,3 +1,8 @@
+# @Author: Webster Bei Yijie, Joey Junyu Liang
+# @Date: 5/8/2020, 3:13:35 PM
+# @Email: yijie.bei@duke.edu, junyu.liang@duke.edu
+
+
 from torch.optim import SGD, Adam
 
 imports = '''import torch

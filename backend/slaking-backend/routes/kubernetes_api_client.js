@@ -1,3 +1,10 @@
+/*
+* @Author: Webster Bei Yijie, Joey Junyu Liang
+* @Date: 5/8/2020, 3:02:22 PM
+* @Email: yijie.bei@duke.edu, junyu.liang@duke.edu
+*/
+
+
 const k8s = require('@kubernetes/client-node');
 const fs = require('fs');
 

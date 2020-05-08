@@ -1,3 +1,10 @@
+/*
+* @Author: Webster Bei Yijie, Joey Junyu Liang
+* @Date: 5/8/2020, 3:02:35 PM
+* @Email: yijie.bei@duke.edu, junyu.liang@duke.edu
+*/
+
+
 
 function getTrainingDeploymentYaml(trainingJobId, modelName) {
     yamlString = `

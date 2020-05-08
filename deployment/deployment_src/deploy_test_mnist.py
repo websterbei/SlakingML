@@ -1,3 +1,8 @@
+# @Author: Webster Bei Yijie, Joey Junyu Liang
+# @Date: 5/8/2020, 3:04:39 PM
+# @Email: yijie.bei@duke.edu, junyu.liang@duke.edu
+
+
 import requests
 from tkinter import Tk
 from tkinter.filedialog import askopenfilename

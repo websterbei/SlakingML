@@ -1,3 +1,10 @@
+/*
+* @Author: Webster Bei Yijie, Joey Junyu Liang
+* @Date: 5/8/2020, 3:02:10 PM
+* @Email: yijie.bei@duke.edu, junyu.liang@duke.edu
+*/
+
+
 var express = require('express');
 var router = express.Router();
 var ObjectID = require('mongodb').ObjectID;

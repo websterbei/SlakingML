@@ -1,3 +1,8 @@
+#  @Author: Webster Bei Yijie, Joey Junyu Liang
+#  @Date: 5/8/2020, 3:15:59 PM
+#  @Email: yijie.bei@duke.edu, junyu.liang@duke.edu
+
+
 FROM node
 
 RUN npm install -g http-server

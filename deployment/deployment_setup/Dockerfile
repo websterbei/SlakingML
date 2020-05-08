@@ -1,3 +1,8 @@
+#  @Author: Webster Bei Yijie, Joey Junyu Liang
+#  @Date: 5/8/2020, 3:15:43 PM
+#  @Email: yijie.bei@duke.edu, junyu.liang@duke.edu
+
+
 FROM websterbei/pytorch-base:v1
 
 RUN /miniconda/bin/conda install flask

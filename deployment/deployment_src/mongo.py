@@ -1,3 +1,8 @@
+# @Author: Webster Bei Yijie, Joey Junyu Liang
+# @Date: 5/8/2020, 3:05:08 PM
+# @Email: yijie.bei@duke.edu, junyu.liang@duke.edu
+
+
 from pymongo import MongoClient
 import pprint
 from bson.objectid import ObjectId

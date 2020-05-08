@@ -1,3 +1,8 @@
+#  @Author: Webster Bei Yijie, Joey Junyu Liang
+#  @Date: 5/8/2020, 3:18:17 PM
+#  @Email: yijie.bei@duke.edu, junyu.liang@duke.edu
+
+
 FROM websterbei/hadoop-base:v1
 
 HEALTHCHECK CMD curl -f http://localhost:9864/ || exit 1

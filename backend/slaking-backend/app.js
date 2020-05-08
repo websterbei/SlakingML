@@ -1,3 +1,10 @@
+/*
+* @Author: Webster Bei Yijie, Joey Junyu Liang
+* @Date: 5/8/2020, 3:01:58 PM
+* @Email: yijie.bei@duke.edu, junyu.liang@duke.edu
+*/
+
+
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');

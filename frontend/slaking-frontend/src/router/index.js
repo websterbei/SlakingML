@@ -1,3 +1,10 @@
+/*
+* @Author: Webster Bei Yijie, Joey Junyu Liang
+* @Date: 5/8/2020, 3:10:49 PM
+* @Email: yijie.bei@duke.edu, junyu.liang@duke.edu
+*/
+
+
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '@/views/Home.vue'
